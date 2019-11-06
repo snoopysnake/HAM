@@ -14,18 +14,43 @@
 // }
 
 // Will move to gamestate in global.js - Implemented here for testing purposes.
-var speed = 60;
+var vehicles = {
+    v01: {
+      name: "Wooden Bicycle",
+      min_speed: 10,
+      max_speed: 60
+    },
+    v02: {
+      name: "Racing Bike",
+      min_speed: 10,
+      max_speed: 35
+    }
+}
+var currentVehicle = vehicles.v01;
+var speed = 30;
 var distance = 0;
 var roundeddistance = 0;
 var time = 0;
-time = setInterval(timeInc, 1000);
-var vehicle = "Wooden Bicycle";
 
-function timeInc()
-{
-  distance = distance + speed*0.000277778;
-  roundeddistance = Math.round(distance * 100)/100;
-  time = time + 1;
+console.log(currentVehicle)
+
+// Constant variables. Does not change during runtime
+const milesToMph = 0.000277778;
+const ticksPerSecond = 60;
+
+// Our core game loop.
+function tick(){
+  // Speed decay
+  speed = Math.max(currentVehicle.min_speed, speed - (1 / ticksPerSecond));
+
+  // Travel more distance
+  distance = distance + ((speed*milesToMph) / ticksPerSecond);
+  time = time + (1/ticksPerSecond);
+}
+
+function goFaster(){
+  // roundeddistance = Math.round(distance * 100)/100;
+  speed = Math.min(currentVehicle.max_speed, speed + 1);
 }
 
 class PlayerFrame extends React.Component{
@@ -35,10 +60,11 @@ class PlayerFrame extends React.Component{
       <div style={{backgroundColor: "#01cdfe"}}>
       <center>
       <font color = "FF71CE">
-        <h1>{vehicle}</h1>
-        <h1>Speed: {speed} MPH</h1>
-        <h2>Distance: {roundeddistance} Miles</h2>
-        <h2>Time: {time-1}</h2>
+        <h1>{currentVehicle.name}</h1>
+        <h1>Speed: {parseFloat(Math.round(speed * 100)/100).toFixed(2)} MPH</h1>
+        <h2>Distance: {parseFloat(Math.round(distance * 100)/100).toFixed(2)} Miles</h2>
+        <h2>Time: {parseFloat(Math.round(time * 100) / 100).toFixed(2)}</h2>
+        <SpeedButton />
       </font>
       </center>
       </div>
@@ -46,6 +72,20 @@ class PlayerFrame extends React.Component{
   }
 }
 
+class SpeedButton extends React.Component{
+  render(){
+    return(
+      <div style={{backgroundColor: "#01cdfe"}}>
+        <button onClick={() => goFaster()}>Click to go faster!</button>
+      </div>
+    );
+  }
+}
+
+// Major game logic
+setInterval(tick, 1000/ticksPerSecond);
+
+// Refresh the display 60 times per second
 setInterval(function(){
   ReactDOM.render(<PlayerFrame />, document.getElementById('root'));
 }, 1000/60)
