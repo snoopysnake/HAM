@@ -13,6 +13,28 @@
 //   }
 // }
 
+// CSS constants
+const divStyle = {
+  textAlign: 'center',
+  margin: 'auto',
+  border: '5px solid pink',
+  color: '#FF71CE',
+  background: '#01CDFE',
+};
+
+const progressStyle = {
+  margin: 'auto',
+  width: '50%',
+  backgroundColor: 'grey',
+};
+
+const progressInnerStyle = {
+  width: '1%',
+  height: '30px',
+  backgroundColor: 'green',
+};
+
+
 // Will move to gamestate in global.js - Implemented here for testing purposes.
 var vehicles = {
     v01: {
@@ -32,7 +54,7 @@ var distance = 0;
 var roundeddistance = 0;
 var time = 0;
 
-console.log(currentVehicle)
+console.log(currentVehicle.name)
 
 // Constant variables. Does not change during runtime
 const milesToMph = 0.000277778;
@@ -57,16 +79,13 @@ class PlayerFrame extends React.Component{
   render(){
     // time variable needs to be fixed, starts at 1. Displaying with time-1 for now, for concept demonstration purposes.
     return(
-      <div style={{backgroundColor: "#01cdfe"}}>
-      <center>
-      <font color = "FF71CE">
+      <div style={divStyle}>
         <h1>{currentVehicle.name}</h1>
         <h1>Speed: {parseFloat(Math.round(speed * 100)/100).toFixed(2)} MPH</h1>
         <h2>Distance: {parseFloat(Math.round(distance * 100)/100).toFixed(2)} Miles</h2>
+        <MileMarker />
         <h2>Time: {parseFloat(Math.round(time * 100) / 100).toFixed(2)}</h2>
         <SpeedButton />
-      </font>
-      </center>
       </div>
     );
   }
@@ -75,8 +94,25 @@ class PlayerFrame extends React.Component{
 class SpeedButton extends React.Component{
   render(){
     return(
-      <div style={{backgroundColor: "#01cdfe"}}>
+      <div>
         <button onClick={() => goFaster()}>Click to go faster!</button>
+      </div>
+    );
+  }
+}
+
+class MileMarker extends React.Component{
+  render(){
+    const barStyle = {
+      margin: 'auto',
+      width: '50%'
+    }
+
+    $( "#progressbar" ).progressbar({
+      value: (distance - Math.floor(distance)) * 100
+    });
+    return(
+      <div id="progressbar" style={barStyle}>
       </div>
     );
   }
