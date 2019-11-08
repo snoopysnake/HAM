@@ -1,6 +1,7 @@
 import React from 'react';
+import './Statistics.css';
 
-export default class PlayerFrame extends React.Component{
+export default class Statistics extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
@@ -39,7 +40,7 @@ export default class PlayerFrame extends React.Component{
   }
   render() {
     return (
-      <div>
+      <div className="component-statistics">
         <h1>{ this.state.currentVehicle.type }</h1>
         <h1>Speed: { parseFloat(Math.round(this.state.speed * 100)/100).toFixed(2) } MPH</h1>
         <h2>Distance: { parseFloat(Math.round(this.state.distance * 100)/100).toFixed(2) } Miles</h2>
