@@ -2,7 +2,7 @@
   "name": "ham",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://snoopysnake.github.io/ahem/",
+  "homepage": "https://snoopysnake.github.io/HAM/",
   "dependencies": {
     "gh-pages": "^2.1.1",
     "pixi.js": "^5.2.0",
