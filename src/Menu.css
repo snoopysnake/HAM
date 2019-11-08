@@ -1,0 +1,7 @@
+.component-menu {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 52.5%;
+	width: 100vw;
+}
