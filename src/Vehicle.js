@@ -1,4 +1,5 @@
 import React from 'react';
+import './Vehicle.css';
 
 export default class Vehicle extends React.Component {
   render() {

@@ -2,6 +2,8 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	height: 52.5%;
-	width: 100vw;
+	height: calc(45% - 20px);
+	width: calc(100% - 20px);
+	padding: 10px;
+	background-color: #05ffa1;
 }
