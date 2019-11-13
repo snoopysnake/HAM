@@ -1,3 +1,12 @@
 .component-statistics {
   width: 35%;
 }
+.progress-bar {
+  height: 20px;
+  width: 500px;
+  border: double #D34FB9;
+}
+.filler {
+  background: #06C2F8;
+  height: 100%;
+}
