@@ -11,6 +11,8 @@ const ticksPerSecond = 60;
 const milesToMph = 0.000277778;
 const multiplier = 100;
 
+var title = '【﻿ＨＡＭ】ＶａｐｏｒＤｒｉｖｅ​​';
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -28,13 +30,22 @@ export default class App extends React.Component {
     };
   }
   componentDidMount() {
-    this.timer = setInterval(
+    this.titleTimer = setInterval (
+      () => this.shiftTitle(),
+      666
+    );
+    this.tickTimer = setInterval(
       () => this.tick(),
       1000 / ticksPerSecond
     );
   }
   componentWillUnmount() {
-    clearInterval(this.timer);
+    clearInterval(this.tickTimer);
+  }
+  shiftTitle() {
+    console.log(title)
+    title = title.substring(1, title.length) + title.charAt(0);
+    document.title = title;
   }
   tick() {
     // Speed decay
