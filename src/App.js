@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Header from './Header';
 import Pixi from './Pixi';
 import Statistics from './Statistics';
 import Vehicle from './Vehicle';
@@ -7,10 +8,12 @@ import Store from './Store';
 
 const ticksPerSecond = 60;
 const milesToMph = 0.000277778;
+const multiplier = 100;
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    this.speedUp = this.speedUp.bind(this);
     this.state = {
       currentVehicle: {
         type: 'Bicycle',
@@ -19,7 +22,8 @@ export default class App extends React.Component {
       },
       speed: 0,
       distance: 0,
-      time: 0
+      time: 0,
+      currency: 0
     };
   }
   componentDidMount() {
@@ -33,20 +37,34 @@ export default class App extends React.Component {
   }
   tick() {
     // Speed decay
-    let speed = Math.max(this.state.currentVehicle.minSpeed, this.state.speed - (1 / ticksPerSecond));
+    let newSpeed = Math.max(this.state.currentVehicle.minSpeed, this.state.speed - (1 / ticksPerSecond));
     // Travel more distance
-    let distance = this.state.distance + ((this.state.speed * milesToMph) / ticksPerSecond);
-    let time = this.state.time + (1 / ticksPerSecond);
+    let newDistance = this.state.distance + ((this.state.speed * milesToMph) / ticksPerSecond);
+    let newTime = this.state.time + (1 / ticksPerSecond);
+    let newCurrency = Math.round(newDistance * multiplier);
     this.setState({
-      speed: speed,
-      distance: distance,
-      time: time
+      speed: newSpeed,
+      distance: newDistance,
+      time: newTime,
+      currency: newCurrency
+    });
+  }
+  speedUp() {
+    this.setState({
+      speed: Math.min(this.state.currentVehicle.maxSpeed, this.state.speed + 1)
     });
   }
   render() {
     return (
       <div className="component-app">
-        <Pixi />
+        <div className="view" onClick={ this.speedUp }>
+          <Header
+            speed = { this.state.speed }
+            distance = { this.state.distance }
+            currency = { this.state.currency }
+          />
+          <Pixi />
+        </div>
         <div className="menu">
           <Statistics
             currentVehicle = { this.state.currentVehicle }
@@ -59,6 +77,7 @@ export default class App extends React.Component {
           />
           <Store
             distance = { this.state.distance }
+            currency = { this.state.currency }
           />
         </div>
       </div>
