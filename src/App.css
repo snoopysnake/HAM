@@ -3,11 +3,17 @@
   height: 100vh;
 }
 
+.view {
+  height: 55%; 
+  position: relative;
+  user-select: none;
+}
+
 .menu {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	height: calc(45% - 20px);
+	height: calc(45% - 40px);
 	width: calc(100% - 20px);
 	padding: 10px;
 	background-color: #05ffa1;
