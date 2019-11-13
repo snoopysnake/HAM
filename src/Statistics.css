@@ -1,3 +1,7 @@
 .component-statistics {
-  width: 35%;
+	background-color: #ff71ce;
+	width: 25%;
+	padding: 0 20px;
+	overflow: hidden;
+	overflow-y: scroll;
 }
