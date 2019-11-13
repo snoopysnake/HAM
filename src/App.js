@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Header from './Header';
 import Pixi from './Pixi';
+import ProgressBar from './ProgressBar';
 import Statistics from './Statistics';
 import Vehicle from './Vehicle';
 import Store from './Store';
@@ -38,7 +39,7 @@ export default class App extends React.Component {
   tick() {
     // Speed decay
     let newSpeed = Math.max(this.state.currentVehicle.minSpeed, this.state.speed - (1 / ticksPerSecond));
-    // Travel more distance
+    // Distance traveled
     let newDistance = this.state.distance + ((this.state.speed * milesToMph) / ticksPerSecond);
     let newTime = this.state.time + (1 / ticksPerSecond);
     let newCurrency = Math.round(newDistance * multiplier);
@@ -51,6 +52,7 @@ export default class App extends React.Component {
   }
   speedUp() {
     this.setState({
+      // Add one mph
       speed: Math.min(this.state.currentVehicle.maxSpeed, this.state.speed + 1)
     });
   }
@@ -65,6 +67,7 @@ export default class App extends React.Component {
           />
           <Pixi />
         </div>
+        <ProgressBar percent={ (this.state.distance - Math.floor(this.state.distance)) * 100 } />
         <div className="menu">
           <Statistics
             currentVehicle = { this.state.currentVehicle }
