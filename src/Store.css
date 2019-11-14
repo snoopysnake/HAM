@@ -3,9 +3,23 @@
 	background-color: #fffb96;
 }
 
-.tabContainer {
-	background-color: red;
+.component-tab {
+	height: 40px;
+	padding: 10px;
+	width: 140px;
 }
-.Tab {
-	color: orange;
+
+.component-catalog {
+	padding: 4px;
+	display: flex;
+	flex-direction: column;
+}
+
+.tab-nav {
+	background-color: #05ffa1;
+} 
+
+.row {
+	display: flex;
+	flex-direction: row;
 }

@@ -1,0 +1,14 @@
+.component-item {
+	height: 125px;
+	width: 125px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 4px;
+	border: 1px black solid;
+	user-select: none;
+}
+
+.component-item:hover {
+	background-color: aqua;
+}

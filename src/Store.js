@@ -1,60 +1,65 @@
 import React from 'react';
-import {storeCatalog} from './StoreItems'
+import Item from './Item';
+import { storeCatalog } from './StoreCatalog'
 import './Store.css';
 
 export default class Store extends React.Component {
+  constructor(props) {
+    super(props);
+    this.switchTab = this.switchTab.bind(this);
+    this.state = {
+      activeTab: 'Store'
+    }
+  }
+  switchTab(e) {
+    this.setState({
+      activeTab: e.target.innerText
+    });
+  }
   render() {
-    // storeCatalog[0].func();
     return (
-      <div>
-        <TabsContainer>
-          <Tab id="Store" active="true">{storeCatalog[0].name}</Tab>
-          <Tab id="Upgrades">asdgf</Tab>
-          <Tab id="Achievements">zxcvbn</Tab>
-        </TabsContainer>
+      <div className="component-store">
+        <div className="tab-nav">
+          <Tab id="Store" display={ this.switchTab } />
+          <Tab id="Upgrades" display={ this.switchTab } />
+          <Tab id="Achievements" display={ this.switchTab } />
+        </div>
+        <Catalog activeTab={ this.state.activeTab } />
       </div>
     );
   }
 }
 
-class TabsContainer extends React.Component {
-  activateTab(){
-
-  }
-
+class Tab extends React.Component {
   render() {
-    // TabsContainer creates a button for each Tab element within it
-    var tabHeaders = this.props.children.map(function(child){
-        if(child.type === Tab){
-          return <button className="Tab" onClick={alert}>{child.props.id}</button>
-        }
-    });
     return (
-      <div className="tabs">
-        <div className="tabHeaders">
-          {tabHeaders}
-        </div>
-        <div className="tabContent">
-          {this.props.children}
-        </div>
-      </div>
+      <button className="component-tab" onClick={ this.props.display }>
+        { this.props.id }
+      </button>
     )
   }
 }
 
-class Tab extends React.Component {
-  constructor(props){
-    super(props);
-    // this.activate = this.activate.bind(this);
-  }
-  activate(){
-    alert('!!!');
-  }
-
+class Catalog extends React.Component {
   render() {
+    const catalogItems = storeCatalog[this.props.activeTab].map((item) => {
+      return <Item key={ item.name } item={ item }/> 
+    });
+    const catalogRows = [];
+    for (let i = 0; i < catalogItems.length; i+=3) {
+      catalogRows.push(
+        <div key={`row-${i}`} className="row">
+          { catalogItems[i] }
+          { catalogItems[i + 1] }
+          { catalogItems[i + 2] }
+        </div>
+      );
+    }
     return (
-      <div>
-        {this.props.children}
+      <div className="component-catalog">
+      {
+        catalogRows
+      }
       </div>
     )
   }
