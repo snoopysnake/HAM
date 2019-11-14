@@ -2,3 +2,10 @@
 	width: 25%;
 	background-color: #fffb96;
 }
+
+.tabContainer {
+	background-color: red;
+}
+.Tab {
+	color: orange;
+}
