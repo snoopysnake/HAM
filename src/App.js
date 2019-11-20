@@ -12,6 +12,7 @@ const milesToMph = 0.000277778;
 const multiplier = 100;
 
 var title = '【﻿ＨＡＭ】ＶａｐｏｒＤｒｉｖｅ​​';
+var atMaxSpeed = false;
 
 export default class App extends React.Component {
   constructor(props) {
@@ -43,13 +44,16 @@ export default class App extends React.Component {
     clearInterval(this.tickTimer);
   }
   shiftTitle() {
-    console.log(title)
+    // console.log(title);
     title = title.substring(1, title.length) + title.charAt(0);
     document.title = title;
   }
   tick() {
     // Speed decay
-    let newSpeed = Math.max(this.state.currentVehicle.minSpeed, this.state.speed - (1 / ticksPerSecond));
+    let newSpeed;
+    if (atMaxSpeed)
+      newSpeed = this.state.currentVehicle.maxSpeed;
+    else newSpeed = Math.max(this.state.currentVehicle.minSpeed, this.state.speed - (1 / ticksPerSecond));
     // Distance traveled
     let newDistance = this.state.distance + ((this.state.speed * milesToMph) / ticksPerSecond);
     let newTime = this.state.time + (1 / ticksPerSecond);
@@ -62,6 +66,17 @@ export default class App extends React.Component {
     });
   }
   speedUp() {
+    if (this.state.speed + 1 >= this.state.currentVehicle.maxSpeed) {
+      // Resets max speed timer
+      atMaxSpeed = true;
+      clearTimeout(this.topSpeedTimer);
+      this.topSpeedTimer = setTimeout(
+        () => {
+          atMaxSpeed = false;
+        },
+        200
+      );
+    }
     this.setState({
       // Add one mph
       speed: Math.min(this.state.currentVehicle.maxSpeed, this.state.speed + 1)
