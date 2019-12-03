@@ -1,10 +1,9 @@
 .component-app {
-  width: 100vw;
   height: 100vh;
 }
 
 .view {
-  height: 55%; 
+  height: 55%;
   position: relative;
   user-select: none;
 }
