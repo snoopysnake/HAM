@@ -10,7 +10,7 @@ export default class Item extends React.Component {
     this.props.purchaseItem(this.props.item);
   }
   render() {
-  	const path = `./assets/${ this.props.item.name.replace(' ','_') }.png`;
+  	const path = `/assets/${ this.props.item.name.replace(' ','_').toLowerCase() }.png`;
     return (
       <div className="component-item" onClick={ this.purchaseItem }>
       	<img src={ path } alt={ this.props.item.name } />
