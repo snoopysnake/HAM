@@ -26,6 +26,7 @@ export default class App extends React.Component {
         maxSpeed: 20
       },
       ownedVehicles: [],
+      messages: [],
       speed: 0,
       distance: 0,
       time: 0,
@@ -50,6 +51,14 @@ export default class App extends React.Component {
     title = title.substring(1, title.length) + title.charAt(0);
     document.title = title;
   }
+  popup(message) {
+    var newMessages = this.state.messages;
+    newMessages.push(message);
+    this.setState({
+      messages: newMessages,
+    })
+  }
+
   tick() {
     // Speed decay
     let newSpeed;
@@ -84,6 +93,7 @@ export default class App extends React.Component {
     }
   }
   speedUp() {
+    this.popup('test');
     if (this.state.speed + 1 >= this.state.currentVehicle.maxSpeed) {
       // Resets max speed timer
       atMaxSpeed = true;
@@ -110,6 +120,7 @@ export default class App extends React.Component {
             distance = { this.state.distance }
             currency = { this.state.currency }
           />
+          <Popups messages = { this.state.messages }/>
           <Pixi />
         </div>
         <ProgressBar percent={ (this.state.distance - Math.floor(this.state.distance)) * 100 } />
@@ -129,6 +140,17 @@ export default class App extends React.Component {
             purchaseItem = {this.purchaseStoreItem }
           />
         </div>
+      </div>
+    );
+  }
+}
+
+class Popups extends React.Component {
+  render(){
+    const messages = this.props.messages.map(reptile => <li>{reptile}</li>);
+    return (
+      <div>
+        {messages}
       </div>
     );
   }
