@@ -5,12 +5,12 @@ var maxSpeed = 0;
 
 export default class Statistics extends React.Component {
   render() {
-    const second = Math.floor(this.props.time) % 60;
-    const secStr = second === 0 ? '' : second === 1 ? second + ' second' : second + ' seconds'
-    const minute = Math.floor(this.props.time / 60 % 60);
-    const minStr = minute === 0 ? '' : minute === 1 ? minute + ' minute' : minute + ' minutes'
     const hour = Math.floor(this.props.time / 60 / 60);
     const hrStr = hour === 0 ? '' : hour === 1 ? hour + ' hour' : hour + ' hours'
+    const minute = Math.floor(this.props.time / 60 % 60);
+    const minStr = minute === 0 ? '' : minute === 1 ? minute + ' minute' : minute + ' minutes'
+    const second = Math.floor(this.props.time) % 60;
+    const secStr = (second === 0 && minute !== 0 || hour !== 0) ? '&nbsp;' : second === 1 ? second + ' second' : second + ' seconds'
     const timer = `${hrStr} ${minStr} ${secStr}`;
     return (
       <div className="component-statistics">

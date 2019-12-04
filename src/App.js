@@ -25,6 +25,7 @@ export default class App extends React.Component {
         minSpeed: 8,
         maxSpeed: 20
       },
+      ownedVehicles: [],
       speed: 0,
       distance: 0,
       time: 0,
@@ -73,16 +74,19 @@ export default class App extends React.Component {
     //   str += keys[i]+": "+storeItem[keys[i]]+"\n";
     // }
     // console.log(str);
-    if (this.state.currency >= storeItem.cost){
+    if(this.state.ownedVehicles.includes(storeItem.name)){
+      alert("You already own a "+storeItem.name+"!");
+    } else if(storeItem.cost > this.state.currency){
+      alert("Not enough credits for "+storeItem.name+".\n\n"+
+            "Your credits: "+Math.round(this.state.currency)+"\n"+
+            storeItem.name+" price: "+storeItem.cost);
+    } else {
       alert(storeItem.name + " purchased!");
       this.setState({
         currentVehicle: storeItem,
         currency: (this.state.currency - storeItem.cost)
-      })
-    } else {
-      alert("Not enough currency for "+storeItem.name+".\n"+
-            "Your currency: "+Math.round(this.state.currency)+"\n"+
-            storeItem.name+" price: "+storeItem.cost);
+      });
+      this.state.ownedVehicles.push(storeItem.name);
     }
   }
   speedUp() {
