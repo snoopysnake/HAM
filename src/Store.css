@@ -1,31 +1,23 @@
 .component-store {
 	min-width: 415px;
 	background-color: #fffb96;
-	overflow-y: hidden;
-}
-
-.component-tab {
-	height: 40px;
-	width: 33.33%;
-	margin: auto;
-	text-align: center;
-}
-
-.component-catalog {
-	padding: 4px;
+	padding: 0 4px;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
 	overflow-y: scroll;
 }
 
-.tab-nav {
-	background-color: #05ffa1;
-	display: flex;
-	flex-direction: row;
+.component-store h1 {
+	padding: 0 6px;
 }
 
 .row {
 	display: flex;
 	flex-direction: row;
+}
+
+.next-vehicle {
+  font-size: 1.15em;
+	font-weight: bold;
+	padding: 10px 6px;
 }

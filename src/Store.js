@@ -6,46 +6,12 @@ import './Store.css';
 export default class Store extends React.Component {
   constructor(props) {
     super(props);
-    this.switchTab = this.switchTab.bind(this);
     this.state = {
-      activeTab: 'Vehicles'
+      catalogIndex: 0,
     }
   }
-  switchTab(e) {
-    this.setState({
-      activeTab: e.target.innerText
-    });
-  }
   render() {
-    return (
-      <div className="component-store">
-        <div className="tab-nav">
-          <Tab id="Vehicles" display={ this.switchTab } />
-          <Tab id="Upgrades" display={ this.switchTab } />
-          <Tab id="Achievements" display={ this.switchTab } />
-        </div>
-        <Catalog
-          activeTab={ this.state.activeTab }
-          purchaseItem = { this.props.purchaseItem }
-        />
-      </div>
-    );
-  }
-}
-
-class Tab extends React.Component {
-  render() {
-    return (
-      <button className="component-tab" onClick={ this.props.display }>
-        { this.props.id }
-      </button>
-    )
-  }
-}
-
-class Catalog extends React.Component {
-  render() {
-    const catalogItems = storeCatalog[this.props.activeTab].map((item) => {
+    const catalogItems = storeCatalog[this.state.catalogIndex].upgrades.map((item) => {
       return <Item  key={ item.name } item={ item } purchaseItem={ this.props.purchaseItem } />
     });
     const catalogRows = [];
@@ -59,10 +25,15 @@ class Catalog extends React.Component {
       );
     }
     return (
-      <div className="component-catalog">
-      {
-        catalogRows
-      }
+      <div className="component-store">
+        <h1>Upgrades</h1>
+        {
+          catalogRows
+        }
+        <div>
+          <div className="next-vehicle">Next Vehicle:</div>
+          <Item item={ storeCatalog[this.state.catalogIndex].nextVehicle } purchaseItem={ this.props.purchaseItem } />
+        </div>
       </div>
     )
   }
