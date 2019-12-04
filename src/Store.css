@@ -1,5 +1,5 @@
 .component-store {
-	width: 415px;
+	min-width: 415px;
 	background-color: #fffb96;
 	overflow-y: hidden;
 }

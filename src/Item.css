@@ -7,8 +7,17 @@
 	margin: 4px;
 	border: 1px black solid;
 	user-select: none;
+	position: relative;
 }
 
 .component-item:hover {
 	background-color: aqua;
+}
+
+.item-name {
+	position: absolute;
+	padding: 3px;
+	bottom: 0;
+	right: 0;
+	font-size: 1.3em;
 }

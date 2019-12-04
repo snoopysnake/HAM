@@ -1,5 +1,5 @@
 export var storeCatalog = {
-  'Store':
+  'Vehicles':
     [
       {
           name: 'Dirt Bike',
@@ -12,11 +12,11 @@ export var storeCatalog = {
           func: () => { console.log('This is a motorcycle.') },
       },
       {
-          name: 'Store 3',
+          name: 'Vehicle 3',
           cost: 40,
       },
       {
-          name: 'Store 4',
+          name: 'Vehicle 4',
           cost: 80,
       },
     ],

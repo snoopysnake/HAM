@@ -8,7 +8,7 @@ export default class Store extends React.Component {
     super(props);
     this.switchTab = this.switchTab.bind(this);
     this.state = {
-      activeTab: 'Store'
+      activeTab: 'Vehicles'
     }
   }
   switchTab(e) {
@@ -20,7 +20,7 @@ export default class Store extends React.Component {
     return (
       <div className="component-store">
         <div className="tab-nav">
-          <Tab id="Store" display={ this.switchTab } />
+          <Tab id="Vehicles" display={ this.switchTab } />
           <Tab id="Upgrades" display={ this.switchTab } />
           <Tab id="Achievements" display={ this.switchTab } />
         </div>

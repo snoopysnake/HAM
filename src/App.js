@@ -57,7 +57,7 @@ export default class App extends React.Component {
     // Distance traveled
     let newDistance = this.state.distance + ((this.state.speed * milesToMph) / ticksPerSecond);
     let newTime = this.state.time + (1 / ticksPerSecond);
-    let newCurrency = Math.round(newDistance * multiplier);
+    let newCurrency = this.state.currency + (this.state.speed * milesToMph) / ticksPerSecond * multiplier;
     this.setState({
       speed: newSpeed,
       distance: newDistance,
