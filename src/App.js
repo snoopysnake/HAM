@@ -68,12 +68,6 @@ export default class App extends React.Component {
     });
   }
   purchaseStoreItem(storeItem){
-    // var keys = Object.keys(storeItem);
-    // var str = ""
-    // for(var i = 0; i < keys.length; i++){
-    //   str += keys[i]+": "+storeItem[keys[i]]+"\n";
-    // }
-    // console.log(str);
     if(this.state.ownedVehicles.includes(storeItem.name)){
       alert("You already own a "+storeItem.name+"!");
     } else if(storeItem.cost > this.state.currency){
