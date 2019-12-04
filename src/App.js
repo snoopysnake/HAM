@@ -18,11 +18,12 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.speedUp = this.speedUp.bind(this);
+    this.purchaseStoreItem = this.purchaseStoreItem.bind(this);
     this.state = {
       currentVehicle: {
-        type: 'Bicycle',
-        minSpeed: 10,
-        maxSpeed: 35
+        name: 'Bicycle',
+        minSpeed: 8,
+        maxSpeed: 20
       },
       speed: 0,
       distance: 0,
@@ -65,6 +66,19 @@ export default class App extends React.Component {
       currency: newCurrency
     });
   }
+  purchaseStoreItem(storeItem){
+    // Must check type of item purchased (can be either vehicle or upgrade)
+    // TODO: make item unavailable (purchased) in store
+    if (this.state.currency >= storeItem.cost){
+      alert(storeItem.name + ' purchased!');
+      this.setState({
+        currentVehicle: storeItem,
+        currency: (this.state.currency - storeItem.cost)
+      })
+    } else {
+      alert(`Not enough credits for ${storeItem.name}!`);
+    }
+  }
   speedUp() {
     if (this.state.speed + 1 >= this.state.currentVehicle.maxSpeed) {
       // Resets max speed timer
@@ -80,6 +94,7 @@ export default class App extends React.Component {
     this.setState({
       // Add one mph
       speed: Math.min(this.state.currentVehicle.maxSpeed, this.state.speed + 1)
+
     });
   }
   render() {
@@ -107,6 +122,7 @@ export default class App extends React.Component {
           <Store
             distance = { this.state.distance }
             currency = { this.state.currency }
+            purchaseItem = { this.purchaseStoreItem }
           />
         </div>
       </div>

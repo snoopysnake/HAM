@@ -18,6 +18,13 @@
 	position: absolute;
 	padding: 3px;
 	bottom: 0;
-	right: 0;
+	left: 0;
 	font-size: 1.3em;
+}
+
+.item-cost {
+	position: absolute;
+	padding: 1px;
+	top: 0;
+	right: 0;
 }

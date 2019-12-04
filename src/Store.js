@@ -24,7 +24,10 @@ export default class Store extends React.Component {
           <Tab id="Upgrades" display={ this.switchTab } />
           <Tab id="Achievements" display={ this.switchTab } />
         </div>
-        <Catalog activeTab={ this.state.activeTab } />
+        <Catalog
+          activeTab={ this.state.activeTab }
+          purchaseItem = { this.props.purchaseItem }
+        />
       </div>
     );
   }
@@ -43,7 +46,7 @@ class Tab extends React.Component {
 class Catalog extends React.Component {
   render() {
     const catalogItems = storeCatalog[this.props.activeTab].map((item) => {
-      return <Item key={ item.name } item={ item }/> 
+      return <Item  key={ item.name } item={ item } purchaseItem={ this.props.purchaseItem } />
     });
     const catalogRows = [];
     for (let i = 0; i < catalogItems.length; i+=3) {
