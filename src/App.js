@@ -18,11 +18,12 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.speedUp = this.speedUp.bind(this);
+    this.purchaseStoreItem = this.purchaseStoreItem.bind(this);
     this.state = {
       currentVehicle: {
-        type: 'Bicycle',
-        minSpeed: 10,
-        maxSpeed: 35
+        name: 'Bicycle',
+        minSpeed: 8,
+        maxSpeed: 20
       },
       speed: 0,
       distance: 0,
@@ -57,13 +58,32 @@ export default class App extends React.Component {
     // Distance traveled
     let newDistance = this.state.distance + ((this.state.speed * milesToMph) / ticksPerSecond);
     let newTime = this.state.time + (1 / ticksPerSecond);
-    let newCurrency = Math.round(newDistance * multiplier);
+    let newCurrency = this.state.currency + (this.state.speed * milesToMph) / ticksPerSecond * multiplier;
     this.setState({
       speed: newSpeed,
       distance: newDistance,
       time: newTime,
       currency: newCurrency
     });
+  }
+  purchaseStoreItem(storeItem){
+    // var keys = Object.keys(storeItem);
+    // var str = ""
+    // for(var i = 0; i < keys.length; i++){
+    //   str += keys[i]+": "+storeItem[keys[i]]+"\n";
+    // }
+    // console.log(str);
+    if (this.state.currency >= storeItem.cost){
+      alert(storeItem.name + " purchased!");
+      this.setState({
+        currentVehicle: storeItem,
+        currency: (this.state.currency - storeItem.cost)
+      })
+    } else {
+      alert("Not enough currency for "+storeItem.name+".\n"+
+            "Your currency: "+Math.round(this.state.currency)+"\n"+
+            storeItem.name+" price: "+storeItem.cost);
+    }
   }
   speedUp() {
     if (this.state.speed + 1 >= this.state.currentVehicle.maxSpeed) {
@@ -80,6 +100,7 @@ export default class App extends React.Component {
     this.setState({
       // Add one mph
       speed: Math.min(this.state.currentVehicle.maxSpeed, this.state.speed + 1)
+
     });
   }
   render() {
@@ -107,6 +128,7 @@ export default class App extends React.Component {
           <Store
             distance = { this.state.distance }
             currency = { this.state.currency }
+            purchaseItem = {this.purchaseStoreItem }
           />
         </div>
       </div>

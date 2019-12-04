@@ -1,9 +1,9 @@
 .component-item {
 	height: 120px;
 	width: 120px;
-	display: flex;
 	align-items: center;
 	justify-content: center;
+	text-align: center;
 	margin: 4px;
 	border: 1px black solid;
 	user-select: none;

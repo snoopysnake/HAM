@@ -16,7 +16,7 @@ export default class Statistics extends React.Component {
       <div className="component-statistics">
         <h1>Stats</h1>
         <Stat name="Time Elapsed" value={ timer } />
-        <Stat name="Current Vehicle" value={ this.props.currentVehicle.type } />
+        <Stat name="Current Vehicle" value={ this.props.currentVehicle.name } />
         <Stat name="Vehicle Min Speed" value={ this.props.currentVehicle.minSpeed + ' MPH' } />
         <Stat name="Vehicle Max Speed" value={ this.props.currentVehicle.maxSpeed + ' MPH' } />
         <Stat name="Top Speed" value={ this.props.speed > maxSpeed ? (maxSpeed = parseFloat(this.props.speed).toFixed(2)) : maxSpeed + ' MPH' } />
