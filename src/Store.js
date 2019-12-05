@@ -6,12 +6,14 @@ import './Store.css';
 export default class Store extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      catalogIndex: 0,
-    }
+    this.purchaseNewVehicle = this.purchaseNewVehicle.bind(this);
+  }
+  purchaseNewVehicle() {
+    this.props.purchaseItem(storeCatalog[this.props.index].nextVehicle);
   }
   render() {
-    const catalogItems = storeCatalog[this.state.catalogIndex].upgrades.map((item) => {
+    console.log(this.props)
+    const catalogItems = storeCatalog[this.props.index].upgrades.map((item) => {
       return <Item  key={ item.name } item={ item } purchaseItem={ this.props.purchaseItem } />
     });
     const catalogRows = [];
@@ -26,14 +28,19 @@ export default class Store extends React.Component {
     }
     return (
       <div className="component-store">
-        <h1>Upgrades</h1>
-        {
-          catalogRows
-        }
-        <div>
-          <div className="next-vehicle">Next Vehicle:</div>
-          <Item item={ storeCatalog[this.state.catalogIndex].nextVehicle } purchaseItem={ this.props.purchaseItem } />
+        <div className="title">Upgrades</div>
+        <div className="current-vehicle">for { storeCatalog[this.props.index].vehicle }</div>
+        <div className="catalog">
+          {
+            catalogItems
+          }
         </div>
+        { storeCatalog[this.props.index].nextVehicle &&
+          <div>
+            <div className="next-vehicle">Next Vehicle:</div>
+              <Item item={ storeCatalog[this.props.index].nextVehicle } purchaseItem={ this.purchaseNewVehicle } />
+          </div>
+        }
       </div>
     )
   }

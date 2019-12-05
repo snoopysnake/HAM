@@ -1,5 +1,7 @@
+/* TODO: create media queries for store width */
 .component-store {
-	min-width: 415px;
+	width: 25%;
+	max-width: 415px;
 	background-color: #fffb96;
 	padding: 0 4px;
 	display: flex;
@@ -7,13 +9,19 @@
 	overflow-y: scroll;
 }
 
-.component-store h1 {
-	padding: 0 6px;
+.component-store .title {
+	padding: .25em 0 0 6px;
+	margin-bottom: 4px;
 }
 
-.row {
+.current-vehicle {
+	padding: 0 6px;
+	margin-bottom: 0.67em;
+}
+
+.catalog {
 	display: flex;
-	flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .next-vehicle {

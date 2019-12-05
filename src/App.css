@@ -17,3 +17,10 @@
 	padding: 10px;
 	background-color: #05ffa1;
 }
+
+.title {
+  display: block;
+  font-size: 2em;
+  font-weight: bold;
+  padding: .25em 0;
+}
