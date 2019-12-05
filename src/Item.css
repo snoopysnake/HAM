@@ -1,4 +1,8 @@
 .component-item {
+	position: relative;
+}
+
+.item {
 	height: 120px;
 	width: 120px;
 	display: flex;
@@ -8,6 +12,15 @@
 	border: 1px black solid;
 	user-select: none;
 	position: relative;
+}
+
+.desc {
+	position: absolute;
+	width: 240px;
+	text-align: center;
+	background-color: red;
+	right: 4px;
+	top: 4px;
 }
 
 .component-item:hover {

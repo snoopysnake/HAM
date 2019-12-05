@@ -11,6 +11,14 @@ export var storeCatalog = [
         name: 'Upgrade 2',
         cost: 20,
       },
+      {
+        name: 'Upgrade 3',
+        cost: 40,
+      },
+      {
+        name: 'Upgrade 4',
+        cost: 80,
+      },
     ],
     nextVehicle:
     {

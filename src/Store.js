@@ -12,20 +12,11 @@ export default class Store extends React.Component {
     this.props.purchaseItem(storeCatalog[this.props.index].nextVehicle);
   }
   render() {
-    console.log(this.props)
     const catalogItems = storeCatalog[this.props.index].upgrades.map((item) => {
-      return <Item  key={ item.name } item={ item } purchaseItem={ this.props.purchaseItem } />
-    });
-    const catalogRows = [];
-    for (let i = 0; i < catalogItems.length; i+=3) {
-      catalogRows.push(
-        <div key={`row-${i}`} className="row">
-          { catalogItems[i] }
-          { catalogItems[i + 1] }
-          { catalogItems[i + 2] }
-        </div>
+      return (
+        <Item  key={ item.name } item={ item } purchaseItem={ this.props.purchaseItem } />
       );
-    }
+    });
     return (
       <div className="component-store">
         <div className="title">Upgrades</div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Header from './Header';
+import Message from './Message';
 import Pixi from './Pixi';
 import ProgressBar from './ProgressBar';
 import Statistics from './Statistics';
@@ -15,7 +16,6 @@ var creditMultiplier = 100; // Multiplies by distance traveled in single tick to
 var mphDecay = 1; // MPH lost per second (60 ticks), default is 1 (1 MPH lost/sec)
 var mphGain = 1; // MPH gained per click, default is 1
 var clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
-var atMaxSpeed = false;
 
 export default class App extends React.Component {
   constructor(props) {
@@ -34,6 +34,7 @@ export default class App extends React.Component {
       time: 0,
       currency: 0,
       catalogIndex: 0,
+      message: '',
     };
   }
   componentDidMount() {
@@ -48,6 +49,7 @@ export default class App extends React.Component {
   }
   componentWillUnmount() {
     clearInterval(this.tickTimer);
+    clearInterval(this.titleTimer);
   }
   shiftTitle() {
     title = title.substring(1, title.length) + title.charAt(0);
@@ -56,7 +58,7 @@ export default class App extends React.Component {
   tick() {
     // Speed decay
     let newSpeed;
-    if (atMaxSpeed)
+    if (this.atMaxSpeed)
       newSpeed = this.state.currentVehicle.maxSpeed;
     else newSpeed = Math.max(this.state.currentVehicle.minSpeed, this.state.speed - (mphDecay / ticksPerSecond));
     // Distance traveled
@@ -71,13 +73,14 @@ export default class App extends React.Component {
     });
   }
   purchaseStoreItem(storeItem){
-    // Must check type of item purchased (can be either vehicle or upgrade)
+    // Check type of item purchased (can be either vehicle or upgrade)
     // TODO: make item unavailable (purchased) in store
-    // TODO: remove alerts, make popup top of window
+    // TODO: change color based on success/fail/type of upgrade
     if (this.state.currency >= storeItem.cost){
-      alert(storeItem.name + ' purchased!');
+      // Deducts cost, displays message
       this.setState({
-        currency: (this.state.currency - storeItem.cost)
+        currency: (this.state.currency - storeItem.cost),
+        message: `${storeItem.name} purchased!`,
       });
       if (storeItem.minSpeed && storeItem.maxSpeed) {
         // Bought a vehicle
@@ -89,18 +92,28 @@ export default class App extends React.Component {
 
       }
     } else {
-      alert(`Not enough credits for ${storeItem.name}!`);
+      if (!this.state.message) {
+        this.setState({
+          message: `Not enough credits for ${storeItem.name}!`,
+        });
+        this.messageTimer = setTimeout(
+          () => {
+            this.setState({
+              message: '',
+            });
+          },
+          2000
+        );
+      }
     }
   }
   speedUp() {
     if (this.state.speed + mphGain >= this.state.currentVehicle.maxSpeed) {
       // Resets max speed timer
-      atMaxSpeed = true;
+      this.atMaxSpeed = true;
       clearTimeout(this.topSpeedTimer);
       this.topSpeedTimer = setTimeout(
-        () => {
-          atMaxSpeed = false;
-        },
+        () => this.atMaxSpeed = false,
         clickDelay
       );
     }
@@ -121,6 +134,7 @@ export default class App extends React.Component {
           />
           <Pixi />
         </div>
+        <Message message={ this.state.message } />
         <ProgressBar percent={ (this.state.distance - Math.floor(this.state.distance)) * 100 } />
         <div className="menu">
           <Statistics
