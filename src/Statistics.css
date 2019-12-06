@@ -1,13 +1,12 @@
 .component-statistics {
 	background-color: #ff71ce;
 	width: 25%;
-	padding: 0 20px;
+	padding: 0 14px; /* Store must also match this padding */
 	overflow-y: scroll;
 }
 
 .component-stat {
 	font-size: 1.15em;
-	padding-bottom: .5em;
 }
 
 .label {

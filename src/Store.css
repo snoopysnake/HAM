@@ -1,31 +1,32 @@
+/* TODO: create media queries for store width */
 .component-store {
-	width: 415px;
+	width: 25%;
+	max-width: 415px;
 	background-color: #fffb96;
-	overflow-y: hidden;
-}
-
-.component-tab {
-	height: 40px;
-	width: 33.33%;
-	margin: auto;
-	text-align: center;
-}
-
-.component-catalog {
-	padding: 4px;
+	padding: 0 4px;
 	display: flex;
 	flex-direction: column;
-	height: 100%;
 	overflow-y: scroll;
 }
 
-.tab-nav {
-	background-color: #05ffa1;
-	display: flex;
-	flex-direction: row;
+.component-store .title {
+	padding: .25em 0 0 6px;
+	margin-bottom: 4px;
 }
 
-.row {
+.current-vehicle {
+	padding: 0 6px;
+	margin-bottom: 0.67em;
+}
+
+.catalog {
 	display: flex;
-	flex-direction: row;
+  flex-wrap: wrap;
+	position: relative;
+}
+
+.next-vehicle {
+  font-size: 1.15em;
+	font-weight: bold;
+	padding: 10px 6px;
 }

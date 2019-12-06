@@ -1,43 +1,46 @@
-export var storeCatalog = {
-  'Store':
+export var storeCatalog = [
+  {
+    vehicle: 'Folding Bike',
+    upgrades:
     [
       {
-          name: 'Dirt Bike',
-          cost: 10,
-          minSpeed: 10,
-          maxSpeed: 35,
-          func: () => { console.log('This is a bicycle.') },
+        name: 'Upgrade 1',
+        cost: 10,
       },
       {
-          name: 'Race Bike',
-          cost: 20,
-          minSpeed: 25,
-          maxSpeed: 50,
-          func: () => { console.log('This is a motorcycle.') },
+        name: 'Upgrade 2',
+        cost: 20,
       },
       {
-          name: 'Store 3',
-          cost: 40,
-          minSpeed: 50,
-          maxSpeed: 100,
+        name: 'Upgrade 3',
+        cost: 40,
       },
       {
-          name: 'Store 4',
-          cost: 80,
-          minSpeed: 100,
-          maxSpeed: 250,
+        name: 'Upgrade 4',
+        cost: 80,
       },
     ],
-  'Upgrades':
-    [
-      {
-          name: 'Upgrade 1',
-      }
-    ],
-  'Achievements':
-    [
-      {
-          name: 'Achievement 1',
-      }
-    ],
-};
+    nextVehicle:
+    {
+      name: 'Fixie',
+      cost: 100,
+      minSpeed: 5,
+      maxSpeed: 15,
+    }
+  },
+  {
+    vehicle: 'Fixie',
+    upgrades: [],
+    nextVehicle:
+    {
+      name: 'Road Bike',
+      cost: 200,
+      minSpeed: 5,
+      maxSpeed: 25,
+    }
+  },
+  {
+    vehicle: 'Road Bike',
+    upgrades: [],
+  }
+];

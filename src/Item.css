@@ -1,14 +1,43 @@
 .component-item {
+	position: relative;
+}
+
+.item {
 	height: 120px;
 	width: 120px;
+	display: flex;
 	align-items: center;
 	justify-content: center;
-	text-align: center;
 	margin: 4px;
 	border: 1px black solid;
 	user-select: none;
+	position: relative;
+}
+
+.desc {
+	position: absolute;
+	width: 240px;
+	text-align: center;
+	background-color: red;
+	right: 4px;
+	top: 4px;
 }
 
 .component-item:hover {
 	background-color: aqua;
+}
+
+.item-name {
+	position: absolute;
+	padding: 3px;
+	bottom: 0;
+	left: 0;
+	font-size: 1.3em;
+}
+
+.item-cost {
+	position: absolute;
+	padding: 1px;
+	top: 0;
+	right: 0;
 }

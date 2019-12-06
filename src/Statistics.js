@@ -5,21 +5,23 @@ var maxSpeed = 0;
 
 export default class Statistics extends React.Component {
   render() {
-    const hour = Math.floor(this.props.time / 60 / 60);
-    const hrStr = hour === 0 ? '' : hour === 1 ? hour + ' hour' : hour + ' hours'
+    const second = Math.floor(this.props.time) % 60;
+    const secStr = second === 1 ? second + ' second' : second + ' seconds'
     const minute = Math.floor(this.props.time / 60 % 60);
     const minStr = minute === 0 ? '' : minute === 1 ? minute + ' minute' : minute + ' minutes'
-    const second = Math.floor(this.props.time) % 60;
-    const secStr = (second === 0 && minute !== 0 || hour !== 0) ? '&nbsp;' : second === 1 ? second + ' second' : second + ' seconds'
-    const timer = `${hrStr} ${minStr} ${secStr}`;
+    const hour = Math.floor(this.props.time / 60 / 60);
+    const hrStr = hour === 0 ? '' : hour === 1 ? hour + ' hour' : hour + ' hours'
     return (
       <div className="component-statistics">
-        <h1>Stats</h1>
-        <Stat name="Time Elapsed" value={ timer } />
+        <div className="title">Stats</div>
+        <Stat name="Time Elapsed" value={ `${hrStr} ${minStr} ${secStr}` } />
         <Stat name="Current Vehicle" value={ this.props.currentVehicle.name } />
         <Stat name="Vehicle Min Speed" value={ this.props.currentVehicle.minSpeed + ' MPH' } />
         <Stat name="Vehicle Max Speed" value={ this.props.currentVehicle.maxSpeed + ' MPH' } />
         <Stat name="Top Speed" value={ this.props.speed > maxSpeed ? (maxSpeed = parseFloat(this.props.speed).toFixed(2)) : maxSpeed + ' MPH' } />
+        <div className="title">Vehicles Owned</div>
+        <div className="title">Achievements</div>
+        <div>You have no achievements :(</div>
       </div>
     );
   }
