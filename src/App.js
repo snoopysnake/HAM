@@ -10,31 +10,29 @@ import Store from './Store';
 
 const ticksPerSecond = 60;
 const milesToMph = 0.000277778;
-
 var title = '【﻿ＨＡＭ】ＶａｐｏｒＤｒｉｖｅ​​';
-var creditMultiplier = 100; // Multiplies by distance traveled in single tick to equal credit earned, default is 100
-var mphDecay = 1; // MPH lost per second (60 ticks), default is 1 (1 MPH lost/sec)
-var mphGain = 1; // MPH gained per click, default is 1
-var clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    this.creditMultiplier = 100; // Multiplies by distance traveled in single tick to equal credit earned, default is 100
+    this.mphDecay = 1; // MPH lost per second (60 ticks), default is 1 (1 MPH lost/sec)
+    this.mphGain = 1; // MPH gained per click, default is 1
+    this.clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
     this.speedUp = this.speedUp.bind(this);
     this.purchaseStoreItem = this.purchaseStoreItem.bind(this);
+    this.currentVehicle = {
+      name: 'Folding Bike',
+      cost: 0,
+      minSpeed: 5,
+      maxSpeed: 10
+    };
+    this.catalogIndex = 0;
     this.state = {
-      currentVehicle: {
-        name: 'Folding Bike',
-        cost: 0,
-        minSpeed: 5,
-        maxSpeed: 10
-      },
       speed: 0,
       distance: 0,
       time: 0,
       currency: 0,
-      catalogIndex: 0,
-      message: '',
     };
   }
   componentDidMount() {
@@ -59,12 +57,12 @@ export default class App extends React.Component {
     // Speed decay
     let newSpeed;
     if (this.atMaxSpeed)
-      newSpeed = this.state.currentVehicle.maxSpeed;
-    else newSpeed = Math.max(this.state.currentVehicle.minSpeed, this.state.speed - (mphDecay / ticksPerSecond));
+      newSpeed = this.currentVehicle.maxSpeed;
+    else newSpeed = Math.max(this.currentVehicle.minSpeed, this.state.speed - (this.mphDecay / ticksPerSecond));
     // Distance traveled
     let newDistance = this.state.distance + ((this.state.speed * milesToMph) / ticksPerSecond);
     let newTime = this.state.time + (1 / ticksPerSecond);
-    let newCurrency = this.state.currency + (this.state.speed * milesToMph) / ticksPerSecond * creditMultiplier;
+    let newCurrency = this.state.currency + (this.state.speed * milesToMph) / ticksPerSecond * this.creditMultiplier;
     this.setState({
       speed: newSpeed,
       distance: newDistance,
@@ -74,52 +72,54 @@ export default class App extends React.Component {
   }
   purchaseStoreItem(storeItem){
     // Check type of item purchased (can be either vehicle or upgrade)
+    // Also a convoluted way to get message to fade correctly
     // TODO: make item unavailable (purchased) in store
     // TODO: change color based on success/fail/type of upgrade
+    this.fade = false; // If true, sets fade class to message after 1 second
+    clearTimeout(this.messageTimer); // Resets timer when clicked
+    clearTimeout(this.fadeTimer); // ^^
     if (this.state.currency >= storeItem.cost){
       // Deducts cost, displays message
       this.setState({
         currency: (this.state.currency - storeItem.cost),
-        message: `${storeItem.name} purchased!`,
+        
       });
+      this.message = `${storeItem.name} purchased!`
       if (storeItem.minSpeed && storeItem.maxSpeed) {
         // Bought a vehicle
-        let i = this.state.catalogIndex;
-        this.setState({
-          currentVehicle: storeItem,
-          catalogIndex: i+1,
-        });
-
+        this.currentVehicle = storeItem;
+        this.catalogIndex++;
       }
     } else {
-      if (!this.state.message) {
-        this.setState({
-          message: `Not enough credits for ${storeItem.name}!`,
-        });
-        this.messageTimer = setTimeout(
-          () => {
-            this.setState({
-              message: '',
-            });
-          },
-          2000
-        );
-      }
+      this.message = `Not enough credits for ${storeItem.name}!`
     }
+    this.messageTimer = setTimeout(
+      () => {
+        this.message = ''
+        this.fade = false;
+      },
+      2000
+    );
+    this.fadeTimer = setTimeout(
+      () => {
+        this.fade = true;
+      },
+      1000
+    );
   }
   speedUp() {
-    if (this.state.speed + mphGain >= this.state.currentVehicle.maxSpeed) {
+    if (this.state.speed + this.mphGain >= this.currentVehicle.maxSpeed) {
       // Resets max speed timer
       this.atMaxSpeed = true;
       clearTimeout(this.topSpeedTimer);
       this.topSpeedTimer = setTimeout(
         () => this.atMaxSpeed = false,
-        clickDelay
+        this.clickDelay
       );
     }
     this.setState({
       // Add one mph per click
-      speed: Math.min(this.state.currentVehicle.maxSpeed, this.state.speed + mphGain)
+      speed: Math.min(this.currentVehicle.maxSpeed, this.state.speed + this.mphGain)
 
     });
   }
@@ -134,20 +134,20 @@ export default class App extends React.Component {
           />
           <Pixi />
         </div>
-        <Message message={ this.state.message } />
+        <Message message={ this.message } fade={ this.fade } />
         <ProgressBar percent={ (this.state.distance - Math.floor(this.state.distance)) * 100 } />
         <div className="menu">
           <Statistics
-            currentVehicle = { this.state.currentVehicle }
+            currentVehicle = { this.currentVehicle }
             speed = { this.state.speed }
             distance = { this.state.distance }
             time = { this.state.time }
           />
           <Vehicle
-            currentVehicle = { this.state.currentVehicle }
+            currentVehicle = { this.currentVehicle }
           />
           <Store
-            index = { this.state.catalogIndex }
+            index = { this.catalogIndex }
             purchaseItem = { this.purchaseStoreItem }
           />
         </div>
