@@ -1,7 +1,7 @@
 /* TODO: create media queries for store width */
 .component-store {
-	width: 50%;
-
+	width: 25%;
+	max-width: 415px;
 	background-color: #fffb96;
 	padding: 0 4px;
 	display: flex;

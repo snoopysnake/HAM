@@ -3,7 +3,7 @@
 }
 
 .view {
-  height: 45%;
+  height: 55%;
   position: relative;
   user-select: none;
 }
@@ -12,7 +12,7 @@
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	height: calc(55% - 40px);
+	height: calc(45% - 40px);
 	width: calc(100% - 20px);
 	padding: 10px;
 	background-color: #05ffa1;

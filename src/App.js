@@ -154,12 +154,12 @@ export default class App extends React.Component {
             distance = { this.state.distance }
             time = { this.state.time }
           />
+          <Vehicle
+            currentVehicle = { this.state.currentVehicle }
+          />
           <Store
             index = { this.state.catalogIndex }
             purchaseItem = { this.purchaseStoreItem }
-          />
-          <Vehicle
-            currentVehicle = { this.state.currentVehicle }
           />
         </div>
       </div>
