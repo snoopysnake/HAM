@@ -1,21 +1,22 @@
 {
   "files": {
-    "main.css": "/HAM/static/css/main.8bbffe82.chunk.css",
-    "main.js": "/HAM/static/js/main.aabcbb76.chunk.js",
-    "main.js.map": "/HAM/static/js/main.aabcbb76.chunk.js.map",
+    "main.css": "/HAM/static/css/main.a0e69cb5.chunk.css",
+    "main.js": "/HAM/static/js/main.7784173f.chunk.js",
+    "main.js.map": "/HAM/static/js/main.7784173f.chunk.js.map",
     "runtime-main.js": "/HAM/static/js/runtime-main.44d42f43.js",
     "runtime-main.js.map": "/HAM/static/js/runtime-main.44d42f43.js.map",
-    "static/js/2.5bb75d9c.chunk.js": "/HAM/static/js/2.5bb75d9c.chunk.js",
-    "static/js/2.5bb75d9c.chunk.js.map": "/HAM/static/js/2.5bb75d9c.chunk.js.map",
+    "static/js/2.34824101.chunk.js": "/HAM/static/js/2.34824101.chunk.js",
+    "static/js/2.34824101.chunk.js.map": "/HAM/static/js/2.34824101.chunk.js.map",
     "index.html": "/HAM/index.html",
-    "precache-manifest.7ab8836e9e3b009fa1c464accea0a75d.js": "/HAM/precache-manifest.7ab8836e9e3b009fa1c464accea0a75d.js",
+    "precache-manifest.9c79d5017de2f76c316323fe831333cd.js": "/HAM/precache-manifest.9c79d5017de2f76c316323fe831333cd.js",
     "service-worker.js": "/HAM/service-worker.js",
-    "static/css/main.8bbffe82.chunk.css.map": "/HAM/static/css/main.8bbffe82.chunk.css.map"
+    "static/css/main.a0e69cb5.chunk.css.map": "/HAM/static/css/main.a0e69cb5.chunk.css.map",
+    "static/media/folding_bike.d3291a2c.svg": "/HAM/static/media/folding_bike.d3291a2c.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.44d42f43.js",
-    "static/js/2.5bb75d9c.chunk.js",
-    "static/css/main.8bbffe82.chunk.css",
-    "static/js/main.aabcbb76.chunk.js"
+    "static/js/2.34824101.chunk.js",
+    "static/css/main.a0e69cb5.chunk.css",
+    "static/js/main.7784173f.chunk.js"
   ]
 }
