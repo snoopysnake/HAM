@@ -3,8 +3,8 @@
 }
 
 .item {
-	height: 120px;
-	width: 120px;
+	height: 110px;
+	width: 110px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -14,16 +14,7 @@
 	position: relative;
 }
 
-.desc {
-	position: absolute;
-	width: 240px;
-	text-align: center;
-	background-color: red;
-	right: 4px;
-	top: 4px;
-}
-
-.component-item:hover {
+.item:hover {
 	background-color: aqua;
 }
 

@@ -6,6 +6,7 @@ export var storeCatalog = [
       {
         name: 'Upgrade 1',
         cost: 10,
+        description: 'This is a description of upgrade 1.',
       },
       {
         name: 'Upgrade 2',

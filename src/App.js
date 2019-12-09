@@ -107,6 +107,9 @@ export default class App extends React.Component {
       1000
     );
   }
+  describeStoreItem(storeItem) {
+    console.log(storeItem.description)
+  }
   speedUp() {
     if (this.state.speed + this.mphGain >= this.currentVehicle.maxSpeed) {
       // Resets max speed timer
@@ -143,12 +146,13 @@ export default class App extends React.Component {
             distance = { this.state.distance }
             time = { this.state.time }
           />
-          <Vehicle
-            currentVehicle = { this.currentVehicle }
-          />
           <Store
             index = { this.catalogIndex }
             purchaseItem = { this.purchaseStoreItem }
+            describeItem={ this.describeStoreItem }
+          />
+          <Vehicle
+            currentVehicle = { this.currentVehicle }
           />
         </div>
       </div>

@@ -1,6 +1,6 @@
 .component-statistics {
 	background-color: #ff71ce;
-	width: 25%;
+	width: 15%;
 	padding: 0 14px; /* Store must also match this padding */
 	overflow-y: scroll;
 }

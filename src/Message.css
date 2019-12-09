@@ -11,7 +11,7 @@
 
 .message-fade {
   -webkit-animation: fadeOut 1s 1;
-  animation: fadeOut 1s 1;
+  animation: fadeOut 1.05s 1;
 }
 
 @keyframes fadeOut {

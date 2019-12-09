@@ -1,5 +1,20 @@
 .component-vehicle {
 	background-color: #01cdfe;
-	width: 50%;
-	margin: 0 10px;
+	width: 35%;
+	margin-left: 10px;
+	position: relative;
+}
+
+.vehicle-name {
+	position: absolute; 
+	padding: 11px;
+	font-size: 1.45em;
+	color: white;
+}
+
+.vehicle-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
 }

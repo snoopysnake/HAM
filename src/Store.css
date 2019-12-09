@@ -1,12 +1,20 @@
 /* TODO: create media queries for store width */
 .component-store {
-	width: 25%;
-	max-width: 415px;
+	width: 50%;
 	background-color: #fffb96;
-	padding: 0 4px;
+	margin-left: 10px;
+	display: flex;
+	flex-direction: row;
+}
+
+.catalog {
 	display: flex;
 	flex-direction: column;
 	overflow-y: scroll;
+	padding: 0 4px;
+	width: 100%;
+	padding-right: 30%;
+	position: relative;
 }
 
 .component-store .title {
@@ -19,7 +27,7 @@
 	margin-bottom: 0.67em;
 }
 
-.catalog {
+.upgrades {
 	display: flex;
   flex-wrap: wrap;
 	position: relative;
@@ -29,4 +37,15 @@
   font-size: 1.15em;
 	font-weight: bold;
 	padding: 10px 6px;
+}
+
+.description {
+	position: sticky;
+	width: 30%;
+	height: calc(1003px - 10px);
+	text-align: center;
+	padding: 5px;
+	right: 0;
+	top: 0;
+	background-color: rgba(0,0,0,.1);
 }
