@@ -1,0 +1,73 @@
+<html>
+	<body>
+		<input type="file" id="svg" name="svg" accept="image/svg">
+	</body>
+</html>
+<script>
+	/* This is for parsing SVG files created by Affinity Designer. This may not work be guaranteed to work for SVG's created by other programs. */
+	let input = document.getElementById('svg');
+	input.addEventListener('change', parseSVG);
+	function parseSVG() {
+		if (input.files.length > 0) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				var readSVG = e.target.result;
+				// console.log('ORIGINAL:', readSVG);
+				var parser = new DOMParser();
+				var parseSVG = parser.parseFromString(readSVG, "application/xml");
+				// Removes extra elements outside svg element
+				for (const child of parseSVG.childNodes) {
+					if (child.tagName != 'svg') {
+						child.remove();
+					}
+				}
+				// Set height + width as 95%, remove namespace attrs (start with 'xml')
+				const parent = parseSVG.childNodes[0];
+				parent.setAttribute('width', '95%');
+				parent.setAttribute('height', '95%');
+				for (const attr of parent.attributes) {
+					if (attr.name.includes('xml')) {
+						parent.removeAttribute(attr.name); // BUG: This doesn't remove all the namespace attrs...
+					}
+				}
+				removeStyle(parent);
+				console.log('PARSED:', parseSVG);
+			}
+			reader.readAsText(input.files[0]);
+		}
+	}
+	function removeStyle(ele) {
+		if (ele.nodeType != Node.ELEMENT_NODE)
+			return;
+		if (ele.hasAttribute('style')) {
+			const svgStyle = ele.getAttribute('style').slice(0, -1); // Remove last ; (to prevent empty ele when split)
+			// Get every css property from inline style, split by :
+			for (const prop of svgStyle.split(';')) {
+				const propSplit = prop.split(':');
+				const propName = propSplit[0];
+				const propVal = propSplit[1];
+				ele.setAttribute(renameProperty(propName.split('-')), propVal);
+			}
+			ele.removeAttribute('style');
+		}
+		if (ele.childNodes == 0)
+			return;
+		else {
+			// Remove style for each child
+			for (const child of ele.childNodes) {
+				removeStyle(child);
+			}
+		}
+	}
+	function renameProperty(split) {
+		// Gets string split by '-' dash
+		var rename = split[0];
+		if (split.length > 1) {
+			for (let i = 1; i < split.length; i++) {
+				// Upper case every subsequent word
+				rename += split[i].charAt(0).toUpperCase() + split[i].slice(1);
+			}
+		}
+		return rename;
+	}
+</script>

@@ -1,6 +1,7 @@
 import React from 'react';
+import FoldingBike from './FoldingBike';
+// import { ReactComponent as FoldingBike} from './svg/folding_bike.svg'; (import SVG without needing to modify DOM)
 import './Vehicle.css';
-import { ReactComponent as FoldingBike} from './svg/folding_bike.svg';
 
 export default class Vehicle extends React.Component {
   render() {
