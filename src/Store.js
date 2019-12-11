@@ -7,12 +7,15 @@ export default class Store extends React.Component {
   constructor(props) {
     super(props);
     this.purchaseNewVehicle = this.purchaseNewVehicle.bind(this);
-    this.state = {
-      selectedItem: {}
-    };
+    this.removeItem = this.removeItem.bind(this);
   }
   purchaseNewVehicle() {
     this.props.purchaseItem(storeCatalog[this.props.index].nextVehicle);
+  }
+  removeItem(item) {
+    if (this.props.currency >= item.cost && item.unique) {
+      item.available = false;
+    }
   }
   render() {
     const catalogItems = storeCatalog[this.props.index].upgrades.map((item) => {
@@ -22,6 +25,7 @@ export default class Store extends React.Component {
           item={ item }
           purchaseItem={ this.props.purchaseItem }
           describeItem={ this.props.describeItem }
+          removeItem={ this.removeItem }
         />
       );
     });
@@ -42,6 +46,7 @@ export default class Store extends React.Component {
                     item={ storeCatalog[this.props.index].nextVehicle }
                     purchaseItem={ this.purchaseNewVehicle } 
                     describeItem={ this.props.describeItem }
+                    removeItem={ this.removeItem }
                   />
               </div>
             }

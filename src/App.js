@@ -20,7 +20,7 @@ export default class App extends React.Component {
     this.mphGain = 1; // MPH gained per click, default is 1
     this.clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
     this.speedUp = this.speedUp.bind(this);
-    this.purchaseStoreItem = this.purchaseStoreItem.bind(this);
+    this.purchaseItem = this.purchaseItem.bind(this);
     this.currentVehicle = {
       name: 'Folding Bike',
       cost: 0,
@@ -70,32 +70,36 @@ export default class App extends React.Component {
       currency: newCurrency
     });
   }
-  purchaseStoreItem(storeItem){
+  purchaseItem(item){
     // Check type of item purchased (can be either vehicle or upgrade)
-    // Also a convoluted way to get message to fade correctly
     // TODO: make item unavailable (purchased) in store
     // TODO: change color based on success/fail/type of upgrade
-    this.fade = false; // If true, sets fade class to message after 1 second
-    clearTimeout(this.messageTimer); // Resets timer when clicked
-    clearTimeout(this.fadeTimer); // ^^
-    if (this.state.currency >= storeItem.cost){
+    //
+    if (this.state.currency >= item.cost){
       // Deducts cost, displays message
       this.setState({
-        currency: (this.state.currency - storeItem.cost),
+        currency: (this.state.currency - item.cost),
         
       });
-      this.message = `${storeItem.name} purchased!`
-      if (storeItem.minSpeed && storeItem.maxSpeed) {
-        // Bought a vehicle
-        this.currentVehicle = storeItem;
+      this.message = `${item.name} purchased!`
+      // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
+      if (item.minSpeed && item.maxSpeed) {
+        this.currentVehicle = item;
         this.catalogIndex++;
       }
     } else {
-      this.message = `Not enough credits for ${storeItem.name}!`
+      this.message = `Not enough credits for ${item.name}!`
     }
+    this.fadeMessage();
+  }
+  fadeMessage() {
+    // A convoluted way to get message to fade correctly
+    this.fade = false; // If true, sets fade class to message after 1 second
+    clearTimeout(this.messageTimer); // Resets timer when clicked
+    clearTimeout(this.fadeTimer); // ^^
     this.messageTimer = setTimeout(
       () => {
-        this.message = ''
+        this.message = '' // Clears message after 2 sec
         this.fade = false;
       },
       2000
@@ -107,8 +111,8 @@ export default class App extends React.Component {
       1000
     );
   }
-  describeStoreItem(storeItem) {
-    console.log(storeItem.description)
+  describeItem(item) {
+    console.log(item.description)
   }
   speedUp() {
     if (this.state.speed + this.mphGain >= this.currentVehicle.maxSpeed) {
@@ -148,8 +152,9 @@ export default class App extends React.Component {
           />
           <Store
             index = { this.catalogIndex }
-            purchaseItem = { this.purchaseStoreItem }
-            describeItem={ this.describeStoreItem }
+            purchaseItem = { this.purchaseItem }
+            describeItem={ this.describeItem }
+            currency = { this.state.currency }
           />
           <Vehicle
             currentVehicle = { this.currentVehicle }
