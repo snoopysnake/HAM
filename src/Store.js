@@ -13,6 +13,7 @@ export default class Store extends React.Component {
     this.props.purchaseItem(storeCatalog[this.props.index].nextVehicle);
   }
   removeItem(item) {
+    // Prevents further purchase, change CSS
     if (this.props.currency >= item.cost && item.unique) {
       item.available = false;
     }
@@ -38,18 +39,18 @@ export default class Store extends React.Component {
             {
               catalogItems
             }
+          </div>
+          { storeCatalog[this.props.index].nextVehicle &&
+            <div>
+              <div className="next-vehicle">Next Vehicle:</div>
+                <Item
+                  item={ storeCatalog[this.props.index].nextVehicle }
+                  purchaseItem={ this.purchaseNewVehicle }
+                  describeItem={ this.props.describeItem }
+                  removeItem={ this.removeItem }
+                />
             </div>
-            { storeCatalog[this.props.index].nextVehicle &&
-              <div>
-                <div className="next-vehicle">Next Vehicle:</div>
-                  <Item
-                    item={ storeCatalog[this.props.index].nextVehicle }
-                    purchaseItem={ this.purchaseNewVehicle } 
-                    describeItem={ this.props.describeItem }
-                    removeItem={ this.removeItem }
-                  />
-              </div>
-            }
+          }
         </div>
       </div>
     )

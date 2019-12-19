@@ -48,6 +48,8 @@ export var storeCatalog = [
       cost: 200,
       minSpeed: 5,
       maxSpeed: 25,
+      available: true,
+      unique: true,
     }
   },
   {
