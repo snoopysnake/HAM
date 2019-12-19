@@ -23,7 +23,8 @@ export default class Item extends React.Component {
   render() {
   	const path = `./assets/${ this.props.item.name.replace(' ','_').toLowerCase() }.png`;
     return (
-      <div className="component-item">
+      <div className="component-item tooltip">
+        <div className="tooltiptext"> <span>{ this.props.item.description ? this.props.item.description : "<No description>" } </span> </div>
         <div className="item" onClick={ this.purchaseItem } onMouseEnter={ this.describeItem }>
         	<img src={ path } alt={ this.props.item.name } />
         	<div className="item-cost">{ this.cost }</div>
