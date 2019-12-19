@@ -8,13 +8,14 @@ import Statistics from './Statistics';
 import Vehicle from './Vehicle';
 import Store from './Store';
 
-const ticksPerSecond = 60;
+// const ticksPerSecond = 60; // Defunct now that we use elapsed time
 const milesToMph = 0.000277778;
 var title = '【﻿ＨＡＭ】ＶａｐｏｒＤｒｉｖｅ​​';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    this.currentTime = new Date();
     this.creditMultiplier = 100; // Multiplies by distance traveled in single tick to equal credit earned, default is 100
     this.mphDecay = 1; // MPH lost per second (60 ticks), default is 1 (1 MPH lost/sec)
     this.mphGain = 1; // MPH gained per click, default is 1
@@ -42,7 +43,7 @@ export default class App extends React.Component {
     );
     this.tickTimer = setInterval(
       () => this.tick(),
-      1000 / ticksPerSecond
+      1000 / 60
     );
   }
   componentWillUnmount() {
@@ -54,15 +55,21 @@ export default class App extends React.Component {
     document.title = title;
   }
   tick() {
+    // Compare time to last time
+    var previousTime = this.currentTime;
+    this.currentTime = new Date();
+    var elapsedSeconds = (this.currentTime - previousTime) / 1000;
+
     // Speed decay
     let newSpeed;
     if (this.atMaxSpeed)
       newSpeed = this.currentVehicle.maxSpeed;
-    else newSpeed = Math.max(this.currentVehicle.minSpeed, this.state.speed - (this.mphDecay / ticksPerSecond));
+    else newSpeed = Math.max(this.currentVehicle.minSpeed, this.state.speed - (this.mphDecay * elapsedSeconds));
+
     // Distance traveled
-    let newDistance = this.state.distance + ((this.state.speed * milesToMph) / ticksPerSecond);
-    let newTime = this.state.time + (1 / ticksPerSecond);
-    let newCurrency = this.state.currency + (this.state.speed * milesToMph) / ticksPerSecond * this.creditMultiplier;
+    let newDistance = this.state.distance + ((this.state.speed * milesToMph) * elapsedSeconds);
+    let newTime = this.state.time + elapsedSeconds;
+    let newCurrency = this.state.currency + ((this.state.speed * milesToMph) * elapsedSeconds) * this.creditMultiplier;
     this.setState({
       speed: newSpeed,
       distance: newDistance,
@@ -79,7 +86,7 @@ export default class App extends React.Component {
       // Deducts cost, displays message
       this.setState({
         currency: (this.state.currency - item.cost),
-        
+
       });
       this.message = `${item.name} purchased!`
       // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
@@ -112,7 +119,7 @@ export default class App extends React.Component {
     );
   }
   describeItem(item) {
-    console.log(item.description)
+    // console.log(item.description)
   }
   speedUp() {
     if (this.state.speed + this.mphGain >= this.currentVehicle.maxSpeed) {
