@@ -1,21 +1,30 @@
 .component-item {
-	position: relative;
-}
-
-.item {
 	height: 110px;
 	width: 110px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	margin: 4px;
 	border: 1px black solid;
 	user-select: none;
-	position: relative;
 }
 
-.item:hover {
+.available:hover {
 	background-color: aqua;
+}
+
+.available {
+	background-color: aquamarine;
+}
+
+.unavailable {
+	background-color: gray;
+}
+
+.item-container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
 }
 
 .item-name {
@@ -31,55 +40,4 @@
 	padding: 1px;
 	top: 0;
 	right: 0;
-}
-
-
-/****************
-	Tooltips css
-****************/
-
-/* Tooltip container */
-.tooltip {
-  position: relative;
-  display: block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-}
-
-/* Tooltip text */
-.tooltip .tooltiptext {
-  opacity: 0;
-	visibility: hidden;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  width: 100%;
-	right: -10%;
-	top: auto;
-	z-index: 10;
-  bottom: 100%;
-  width: 140px;
-  line-height: 16px;
-  opacity: 0.85;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  opacity: 1;
-	visibility: visible;
-}
-
-/* Arrow pointing down below the tooltip */
-.tooltip .tooltiptext::after {
-  content: " ";
-  position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
 }

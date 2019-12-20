@@ -20,21 +20,21 @@ export default class App extends React.Component {
     this.mphDecay = 1; // MPH lost per second (60 ticks), default is 1 (1 MPH lost/sec)
     this.mphGain = 1; // MPH gained per click, default is 1
     this.clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
-    this.speedUp = this.speedUp.bind(this);
-    this.purchaseItem = this.purchaseItem.bind(this);
+    this.index = 0;
     this.currentVehicle = {
       name: 'Folding Bike',
       cost: 0,
       minSpeed: 5,
       maxSpeed: 10
     };
-    this.catalogIndex = 0;
     this.state = {
       speed: 0,
       distance: 0,
       time: 0,
       currency: 0,
     };
+    this.speedUp = this.speedUp.bind(this);
+    this.purchaseItem = this.purchaseItem.bind(this);
   }
   componentDidMount() {
     this.titleTimer = setInterval (
@@ -79,20 +79,17 @@ export default class App extends React.Component {
   }
   purchaseItem(item){
     // Check type of item purchased (can be either vehicle or upgrade)
-    // TODO: make item unavailable (purchased) in store
     // TODO: change color based on success/fail/type of upgrade
-    //
     if (this.state.currency >= item.cost){
       // Deducts cost, displays message
       this.setState({
         currency: (this.state.currency - item.cost),
-
       });
       this.message = `${item.name} purchased!`
       // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
       if (item.minSpeed && item.maxSpeed) {
         this.currentVehicle = item;
-        this.catalogIndex++;
+        this.index++;
       }
     } else {
       this.message = `Not enough credits for ${item.name}!`
@@ -117,9 +114,6 @@ export default class App extends React.Component {
       },
       1000
     );
-  }
-  describeItem(item) {
-    // console.log(item.description)
   }
   speedUp() {
     if (this.state.speed + this.mphGain >= this.currentVehicle.maxSpeed) {
@@ -158,9 +152,8 @@ export default class App extends React.Component {
             time = { this.state.time }
           />
           <Store
-            index = { this.catalogIndex }
+            index = { this.index }
             purchaseItem = { this.purchaseItem }
-            describeItem={ this.describeItem }
             currency = { this.state.currency }
           />
           <Vehicle
