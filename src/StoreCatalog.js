@@ -9,6 +9,9 @@ export var storeCatalog = [
         description: 'This is a loooooooooooooooooooong description of upgrade 1.',
         available: true,
         unique: false,
+        modify(stat) {
+          return stat + 1; // for modifying vars in app.js
+        }
       },
       {
         name: 'Upgrade 2',
@@ -48,8 +51,7 @@ export var storeCatalog = [
         unique: true,
       },
     ],
-    nextVehicle:
-    {
+    nextVehicle: {
       name: 'Fixie',
       cost: 100,
       minSpeed: 5,
@@ -61,8 +63,7 @@ export var storeCatalog = [
   {
     vehicle: 'Fixie',
     upgrades: [],
-    nextVehicle:
-    {
+    nextVehicle: {
       name: 'Road Bike',
       cost: 200,
       minSpeed: 5,

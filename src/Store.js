@@ -27,7 +27,7 @@ export default class Store extends React.Component {
       this.itemRef = itemRef;
       if (item.description) {
         this.setState({
-          description: item.description
+          description: `"${item.description}"`
         });
       }
       else {
@@ -45,7 +45,7 @@ export default class Store extends React.Component {
   }
   componentDidUpdate() {
     if (this.state.description) {
-      this.descX = this.itemRef.current.getBoundingClientRect().x - 50;
+      this.descX = this.itemRef.current.getBoundingClientRect().x - 75;
       this.descY = this.itemRef.current.getBoundingClientRect().y - this.tooltipRef.current.clientHeight - 5;
     }
   }
@@ -83,8 +83,9 @@ export default class Store extends React.Component {
             </div>
           }
         </div>
-        <div className="tooltip" style={ this.state.description ? { left:this.descX, top:this.descY } : { opacity: '0', visibility: 'hidden' } } ref={ this.tooltipRef }>
-          { this.state.description }
+        <div className="tooltip" style={ this.state.description ? { left:this.descX, top:this.descY } : { display: 'none' } } ref={ this.tooltipRef }>
+          <span>{ this.state.description }</span>
+          <span className="modifier">modifiers go here</span>
         </div>
       </div>
     )
