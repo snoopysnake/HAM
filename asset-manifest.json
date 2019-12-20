@@ -1,22 +1,21 @@
 {
   "files": {
-    "main.css": "/HAM/static/css/main.a0e69cb5.chunk.css",
-    "main.js": "/HAM/static/js/main.7784173f.chunk.js",
-    "main.js.map": "/HAM/static/js/main.7784173f.chunk.js.map",
+    "main.css": "/HAM/static/css/main.b07ab158.chunk.css",
+    "main.js": "/HAM/static/js/main.a36b6215.chunk.js",
+    "main.js.map": "/HAM/static/js/main.a36b6215.chunk.js.map",
     "runtime-main.js": "/HAM/static/js/runtime-main.44d42f43.js",
     "runtime-main.js.map": "/HAM/static/js/runtime-main.44d42f43.js.map",
     "static/js/2.34824101.chunk.js": "/HAM/static/js/2.34824101.chunk.js",
     "static/js/2.34824101.chunk.js.map": "/HAM/static/js/2.34824101.chunk.js.map",
     "index.html": "/HAM/index.html",
-    "precache-manifest.9c79d5017de2f76c316323fe831333cd.js": "/HAM/precache-manifest.9c79d5017de2f76c316323fe831333cd.js",
+    "precache-manifest.df0f12ce18aa2ec890b1d6c553798e69.js": "/HAM/precache-manifest.df0f12ce18aa2ec890b1d6c553798e69.js",
     "service-worker.js": "/HAM/service-worker.js",
-    "static/css/main.a0e69cb5.chunk.css.map": "/HAM/static/css/main.a0e69cb5.chunk.css.map",
-    "static/media/folding_bike.d3291a2c.svg": "/HAM/static/media/folding_bike.d3291a2c.svg"
+    "static/css/main.b07ab158.chunk.css.map": "/HAM/static/css/main.b07ab158.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.44d42f43.js",
     "static/js/2.34824101.chunk.js",
-    "static/css/main.a0e69cb5.chunk.css",
-    "static/js/main.7784173f.chunk.js"
+    "static/css/main.b07ab158.chunk.css",
+    "static/js/main.a36b6215.chunk.js"
   ]
 }
