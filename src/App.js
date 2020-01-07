@@ -7,17 +7,11 @@ import ProgressBar from './ProgressBar';
 import Statistics from './Statistics';
 import Vehicle from './Vehicle';
 import Store from './Store';
+import Modifier from './Modifier';
 
 // const ticksPerSecond = 60; // Defunct now that we use elapsed time
 const milesToMph = 0.000277778;
 var title = '【﻿ＨＡＭ】ＶａｐｏｒＤｒｉｖｅ​​';
-
-class Modifier {
-  constructor(value, multiplier) {
-    this.value = value;
-    this.multiplier = multiplier;
-  }
-}
 
 export default class App extends React.Component {
   constructor(props) {
@@ -27,12 +21,13 @@ export default class App extends React.Component {
     this.mphDecay = 1; // MPH lost per second (60 ticks), default is 1 (1 MPH lost/sec)
     this.mphGain = 1; // MPH gained per click, default is 1
     this.clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
-    this.index = 0;
+    this.index = 0; // index of store catalog
+    this.activeUpgrades = []; // Array of active upgrade timeouts (empty this array when purchasing new vehicle)
     this.currentVehicle = {
       name: 'Folding Bike',
       cost: 0,
       minSpeed: 5,
-      maxSpeed: 10
+      maxSpeed: new Modifier(10, 1, 1, 0)
     };
     this.state = {
       speed: 0,
@@ -69,8 +64,13 @@ export default class App extends React.Component {
 
     // Speed decay
     let newSpeed;
-    if (this.atMaxSpeed)
-      newSpeed = this.currentVehicle.maxSpeed;
+    if (this.atMaxSpeed) {
+      if (this.state.speed > this.currentVehicle.maxSpeed.total()) {
+        // speed can be greater than max speed if a modifier is active
+        newSpeed = this.state.speed - (this.mphDecay * elapsedSeconds);
+      }
+      else newSpeed = this.currentVehicle.maxSpeed.total();
+    }
     else newSpeed = Math.max(this.currentVehicle.minSpeed, this.state.speed - (this.mphDecay * elapsedSeconds));
 
     // Distance traveled
@@ -89,17 +89,19 @@ export default class App extends React.Component {
     // TODO: change color based on success/fail/type of upgrade
     if (this.state.currency >= item.cost){
       // Deducts cost, displays message
-      if (item.modify) {
-        const itemModify = item.modify.bind(this);
-        itemModify(this);
-      }
       this.setState({
         currency: (this.state.currency - item.cost),
       });
       this.message = `${item.name} purchased!`
       console.log(this.message);
+      // Modify stats
+      if (item.modify) {
+        const itemModify = item.modify.bind(this);
+        itemModify(this);
+      }
       // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
       if (item.minSpeed && item.maxSpeed) {
+        // Remove active upgrades
         this.currentVehicle = item;
         this.index++;
       }
@@ -128,7 +130,7 @@ export default class App extends React.Component {
     );
   }
   speedUp() {
-    if (this.state.speed + this.mphGain >= this.currentVehicle.maxSpeed) {
+    if (this.state.speed + this.mphGain >= this.currentVehicle.maxSpeed.total()) {
       // Resets max speed timer
       this.atMaxSpeed = true;
       clearTimeout(this.topSpeedTimer);
@@ -137,11 +139,13 @@ export default class App extends React.Component {
         this.clickDelay
       );
     }
-    this.setState({
-      // Add one mph per click
-      speed: Math.min(this.currentVehicle.maxSpeed, this.state.speed + this.mphGain)
-
-    });
+    if (this.state.speed <= this.currentVehicle.maxSpeed.total()) {
+      // speed can be greater than max speed if a modifier is active
+      this.setState({
+        // Add one mph per click
+        speed: Math.min(this.currentVehicle.maxSpeed.total(), this.state.speed + this.mphGain)
+      });
+    }
   }
   render() {
     return (

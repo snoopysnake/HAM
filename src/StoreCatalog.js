@@ -1,18 +1,32 @@
+import Modifier from './Modifier';
+
 export var storeCatalog = [
   {
     vehicle: 'Folding Bike',
     upgrades:
     [
       {
-        name: 'Upgrade 1',
+        name: 'Sample Upgrade',
         cost: 10,
-        description: 'This is a loooooooooooooooooooong description of upgrade 1.',
+        description: 'This is a basic reusable upgrade.',
         available: true,
-        cooldown: 5000, // ms before next purchase 
+        cooldown: 6000, // ms before next purchase 
         modifier: '+10 max speed',
         modify() {
-          this.currentVehicle.maxSpeed+=10;
-        }
+          console.log('+10 max speed...');
+          this.currentVehicle.maxSpeed.b+=10;
+          let upgradeTimeout = setTimeout(() => {
+            console.log('Sample upgrade effects have worn off...');
+            if (this.currentVehicle.maxSpeed.b > 0) {
+              // subtract if upgrade active (prevents subtracting for new vehicle)
+              // TODO: clear timeout? add timeout to array?
+              this.currentVehicle.maxSpeed.b-=10;
+            }
+          }, 5000); // ms upgrade active for
+          console.log(this.activeUpgrades.indexOf(upgradeTimeout))
+          this.activeUpgrades.push(upgradeTimeout);
+          console.log(this.activeUpgrades)
+        },
       },
       {
         name: 'Upgrade 2',
@@ -50,7 +64,7 @@ export var storeCatalog = [
       name: 'Fixie',
       cost: 100,
       minSpeed: 5,
-      maxSpeed: 15,
+      maxSpeed: new Modifier(15, 1, 1, 0),
       available: true,
       unique: true,
     }
@@ -62,7 +76,7 @@ export var storeCatalog = [
       name: 'Road Bike',
       cost: 200,
       minSpeed: 5,
-      maxSpeed: 25,
+      maxSpeed: new Modifier(25, 1, 1, 0),
       available: true,
       unique: true,
     }
