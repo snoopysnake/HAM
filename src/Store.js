@@ -12,20 +12,26 @@ export default class Store extends React.Component {
     this.tooltipRef = React.createRef();
     this.itemRef = null; // Used to get position of item hovered over
     this.opacity = 0; // Prevents tooltip from showing up early
-    this.state = { description: null };
+    this.state = { description: null, modifier: null };
   }
   purchaseNewVehicle() {
     this.props.purchaseItem(storeCatalog[this.props.index].nextVehicle);
   }
   removeItem(item) {
     // Prevents further purchase, change CSS
-    if (this.props.currency >= item.cost && item.unique) {
+    if (this.props.currency >= item.cost) {
       item.available = false;
+      if (item.cooldown) {
+        setTimeout(() => {
+          item.available = true;
+        }, item.cooldown);
+      }
     }
   }
   describeItem(item, itemRef) {
     if (item) {
       this.itemRef = itemRef;
+      // set item description in tooltip
       if (item.description) {
         this.setState({
           description: `"${item.description}"`
@@ -36,17 +42,29 @@ export default class Store extends React.Component {
           description: '<No description>'
         });
       }
+      // set item modifier in tooltip
+      if (item.modifier) {
+        this.setState({
+          modifier: item.modifier
+        });
+      }
+      else {
+        this.setState({
+          modifier: '<No modifier>'
+        });
+      }
     }
     else {
       this.itemRef = null;
       this.setState({
-        description: null
+        description: null,
+        modifier: null
       });
       this.opacity = 0;
     }
   }
   componentDidUpdate() {
-    if (this.state.description && this.opacity === 0) {
+    if (this.state.description && this.state.modifier && this.opacity === 0) {
       this.descX = this.itemRef.current.getBoundingClientRect().x - 75;
       this.descY = this.itemRef.current.getBoundingClientRect().y - this.tooltipRef.current.clientHeight - 5;
       this.opacity = 1;
@@ -88,7 +106,7 @@ export default class Store extends React.Component {
         </div>
         <div className="tooltip" style={ this.state.description ? { left:this.descX, top:this.descY, opacity:this.opacity } : { display: 'none' } } ref={ this.tooltipRef }>
           <span>{ this.state.description }</span>
-          <span className="modifier">modifiers go here</span>
+          <span className="modifier">{ this.state.modifier }</span>
         </div>
       </div>
     )

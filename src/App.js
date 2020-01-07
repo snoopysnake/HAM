@@ -12,6 +12,13 @@ import Store from './Store';
 const milesToMph = 0.000277778;
 var title = '【﻿ＨＡＭ】ＶａｐｏｒＤｒｉｖｅ​​';
 
+class Modifier {
+  constructor(value, multiplier) {
+    this.value = value;
+    this.multiplier = multiplier;
+  }
+}
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -31,7 +38,7 @@ export default class App extends React.Component {
       speed: 0,
       distance: 0,
       time: 0,
-      currency: 0,
+      currency: 1000,
     };
     this.speedUp = this.speedUp.bind(this);
     this.purchaseItem = this.purchaseItem.bind(this);
@@ -82,10 +89,15 @@ export default class App extends React.Component {
     // TODO: change color based on success/fail/type of upgrade
     if (this.state.currency >= item.cost){
       // Deducts cost, displays message
+      if (item.modify) {
+        const itemModify = item.modify.bind(this);
+        itemModify(this);
+      }
       this.setState({
         currency: (this.state.currency - item.cost),
       });
       this.message = `${item.name} purchased!`
+      console.log(this.message);
       // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
       if (item.minSpeed && item.maxSpeed) {
         this.currentVehicle = item;

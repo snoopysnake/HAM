@@ -20,13 +20,18 @@ export default class Item extends React.Component {
   render() {
   	const path = `./assets/${ this.props.item.name.replace(' ','_').toLowerCase() }.png`;
     return (
-      <div className={ this.props.item.available ? 'component-item available' : 'component-item unavailable' }
+      <div
+        className={
+          this.props.item.available ? 'component-item available' :
+          !this.props.item.available && this.props.item.cooldown ? 'component-item temp-unavailable' :
+          'component-item unavailable'
+        }
         onClick={ this.purchaseItem } onMouseEnter={ this.describeItem } onMouseLeave={ e => {this.props.describeItem(null, null)} }
         ref={ this.itemRef }>
         <div className="item-container">
           <img src={ path } alt={ this.props.item.name } />
-          <div className="item-cost">{ this.props.item.available ? this.props.item.cost : '' }</div>
-          <div className="item-name">{ this.props.item.available ? this.props.item.name : 'SOLD OUT' }</div>
+          <div className="item-cost">{ this.props.item.available || this.props.item.cooldown ? this.props.item.cost : '' }</div>
+          <div className="item-name">{ this.props.item.available || this.props.item.cooldown ? this.props.item.name : 'SOLD OUT' }</div>
         </div>
       </div>
     );
