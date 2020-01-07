@@ -11,6 +11,7 @@ export default class Store extends React.Component {
     this.describeItem = this.describeItem.bind(this);
     this.tooltipRef = React.createRef();
     this.itemRef = null; // Used to get position of item hovered over
+    this.opacity = 0; // Prevents tooltip from showing up early
     this.state = { description: null };
   }
   purchaseNewVehicle() {
@@ -41,12 +42,14 @@ export default class Store extends React.Component {
       this.setState({
         description: null
       });
+      this.opacity = 0;
     }
   }
   componentDidUpdate() {
-    if (this.state.description) {
+    if (this.state.description && this.opacity === 0) {
       this.descX = this.itemRef.current.getBoundingClientRect().x - 75;
       this.descY = this.itemRef.current.getBoundingClientRect().y - this.tooltipRef.current.clientHeight - 5;
+      this.opacity = 1;
     }
   }
   render() {
@@ -83,7 +86,7 @@ export default class Store extends React.Component {
             </div>
           }
         </div>
-        <div className="tooltip" style={ this.state.description ? { left:this.descX, top:this.descY } : { display: 'none' } } ref={ this.tooltipRef }>
+        <div className="tooltip" style={ this.state.description ? { left:this.descX, top:this.descY, opacity:this.opacity } : { display: 'none' } } ref={ this.tooltipRef }>
           <span>{ this.state.description }</span>
           <span className="modifier">modifiers go here</span>
         </div>
