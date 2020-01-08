@@ -6,38 +6,26 @@ export var storeCatalog = [
     upgrades:
     [
       {
-        name: 'Sample Upgrade',
-        cost: 10,
-        description: 'This is a basic reusable upgrade.',
+        name: 'Sport Handlebars',
+        cost: 20,
+        description: 'Provides better grip and handling.',
         available: true,
-        cooldown: 6000, // ms before next purchase 
-        modifier: '+10 max speed',
+        modifier: '+1 max speed',
         modify() {
-          console.log('+10 max speed...');
-          this.currentVehicle.maxSpeed.b+=10;
-          let upgradeTimeout = setTimeout(() => {
-            console.log('Sample upgrade effects have worn off...');
-            if (this.currentVehicle.maxSpeed.b > 0) {
-              // subtract if upgrade active (prevents subtracting for new vehicle)
-              // TODO: clear timeout? add timeout to array?
-              this.currentVehicle.maxSpeed.b-=10;
-            }
-          }, 5000); // ms upgrade active for
-          console.log(this.activeUpgrades.indexOf(upgradeTimeout))
-          this.activeUpgrades.push(upgradeTimeout);
-          console.log(this.activeUpgrades)
+          console.log('+1 max speed...');
+          this.currentVehicle.maxSpeed.b+=1;
         },
       },
       {
-        name: 'Upgrade 2',
+        name: 'Comfy Seat',
         cost: 20,
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        description: 'A plush seat.',
         available: true,
-      },
-      {
-        name: 'Upgrade 3',
-        cost: 40,
-        available: true,
+        modifier: '+1 max speed',
+        modify() {
+          console.log('+1 max speed...');
+          this.currentVehicle.maxSpeed.b+=1;
+        },
       },
       {
         name: 'Upgrade 4',
@@ -45,19 +33,44 @@ export var storeCatalog = [
         available: true,
       },
       {
-        name: 'Upgrade 5',
-        cost: 99999999,
-        available: false,
+        name: 'Sample Upgrade 1',
+        cost: 10,
+        description: 'This is a basic reusable upgrade.',
+        available: true,
+        active: 5000, // ms upgrade active for
+        cooldown: 6000, // ms before next purchase
+        modifier: '+10 max speed',
+        modify(item) {
+          console.log(`$(item.modifier)...`);
+          this.currentVehicle.maxSpeed.b+=10;
+        },
+        remove(item) {
+          setTimeout(() => {
+            console.log(`$(item.name) effects have worn off...`);
+            this.currentVehicle.maxSpeed.b-=10;
+            this.activeUpgrades.splice(this.activeUpgrades.indexOf(item),1); // remove item from array
+          }, item.active); // ms upgrade active for
+        },
       },
       {
-        name: 'Upgrade 6',
-        cost: 99999999,
-        available: false,
-      },
-      {
-        name: 'Upgrade 7',
-        cost: 99999999,
-        available: false,
+        name: 'Sample Upgrade 2',
+        cost: 10,
+        description: 'This is a basic reusable upgrade.',
+        available: true,
+        active: 3000, // ms upgrade active for
+        cooldown: 10000, // ms before next purchase
+        modifier: 'x2 total max speed',
+        modify(item) {
+          console.log(`$(item.modifier)...`);
+          this.currentVehicle.maxSpeed.m+=2;
+        },
+        remove(item) {
+          setTimeout(() => {
+            console.log(`$(item.name) effects have worn off...`);
+            this.currentVehicle.maxSpeed.m-=2;
+            this.activeUpgrades.splice(this.activeUpgrades.indexOf(item),1);
+          }, item.active);
+        },
       },
     ],
     nextVehicle: {

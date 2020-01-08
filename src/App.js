@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
 import Header from './Header';
+import ActiveUpgrades from './ActiveUpgrades';
 import Message from './Message';
 import Pixi from './Pixi';
 import ProgressBar from './ProgressBar';
@@ -8,6 +8,7 @@ import Statistics from './Statistics';
 import Vehicle from './Vehicle';
 import Store from './Store';
 import Modifier from './Modifier';
+import './App.css';
 
 // const ticksPerSecond = 60; // Defunct now that we use elapsed time
 const milesToMph = 0.000277778;
@@ -97,7 +98,15 @@ export default class App extends React.Component {
       // Modify stats
       if (item.modify) {
         const itemModify = item.modify.bind(this);
-        itemModify(this);
+        itemModify(item);
+      }
+      // Remove stats after a timeout
+      if (item.remove) {
+        const itemRemove = item.remove.bind(this);
+        itemRemove(item);
+      }
+      if (item.cooldown) {
+        this.activeUpgrades.push(item);
       }
       // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
       if (item.minSpeed && item.maxSpeed) {
@@ -151,6 +160,7 @@ export default class App extends React.Component {
     return (
       <div className="component-app">
         <div className="view" onClick={ this.speedUp }>
+          <ActiveUpgrades activeUpgrades={ this.activeUpgrades }/>
           <Header
             speed = { this.state.speed }
             distance = { this.state.distance }
