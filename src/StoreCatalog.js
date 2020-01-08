@@ -41,15 +41,12 @@ export var storeCatalog = [
         cooldown: 6000, // ms before next purchase
         modifier: '+10 max speed',
         modify(item) {
-          console.log(`$(item.modifier)...`);
+          console.log(`${item.modifier}...`);
           this.currentVehicle.maxSpeed.b+=10;
         },
         remove(item) {
-          setTimeout(() => {
-            console.log(`$(item.name) effects have worn off...`);
-            this.currentVehicle.maxSpeed.b-=10;
-            this.activeUpgrades.splice(this.activeUpgrades.indexOf(item),1); // remove item from array
-          }, item.active); // ms upgrade active for
+          console.log(`${item.name} effects have worn off...`);
+          this.currentVehicle.maxSpeed.b-=10;
         },
       },
       {
@@ -57,19 +54,16 @@ export var storeCatalog = [
         cost: 10,
         description: 'This is a basic reusable upgrade.',
         available: true,
-        active: 3000, // ms upgrade active for
-        cooldown: 10000, // ms before next purchase
+        active: 3000,
+        cooldown: 10000,
         modifier: 'x2 total max speed',
         modify(item) {
-          console.log(`$(item.modifier)...`);
-          this.currentVehicle.maxSpeed.m+=2;
+          console.log(`${item.modifier}...`);
+          this.currentVehicle.maxSpeed.m*=2;
         },
         remove(item) {
-          setTimeout(() => {
-            console.log(`$(item.name) effects have worn off...`);
-            this.currentVehicle.maxSpeed.m-=2;
-            this.activeUpgrades.splice(this.activeUpgrades.indexOf(item),1);
-          }, item.active);
+          console.log(`${item.name} effects have worn off...`);
+          this.currentVehicle.maxSpeed.m/=2;
         },
       },
     ],

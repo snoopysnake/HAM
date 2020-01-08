@@ -101,16 +101,21 @@ export default class App extends React.Component {
         itemModify(item);
       }
       // Remove stats after a timeout
-      if (item.remove) {
+      if (item.cooldown && item.remove) {
         const itemRemove = item.remove.bind(this);
-        itemRemove(item);
-      }
-      if (item.cooldown) {
+        item.timeout = setTimeout(() => {
+          itemRemove(item);
+          this.activeUpgrades.splice(this.activeUpgrades.indexOf(item),1); // remove item from array
+        }, item.active);
         this.activeUpgrades.push(item);
       }
       // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
       if (item.minSpeed && item.maxSpeed) {
-        // Remove active upgrades
+        // Remove all active upgrades
+        this.activeUpgrades.forEach(upgrade => {
+          clearTimeout(upgrade.timeout);
+        });
+        this.activeUpgrades = [];
         this.currentVehicle = item;
         this.index++;
       }
