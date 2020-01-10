@@ -26,6 +26,14 @@ export default class Store extends React.Component {
           item.available = true;
         }, item.cooldown);
       }
+      if (item.isGear) {
+        // Removes every subsequent reference to gear object in upgrade arrays
+        var i = this.props.index + 1;
+        while (storeCatalog[i].upgrades.indexOf(item) >= 0) {
+          storeCatalog[i].upgrades.splice(item, 1);
+          i++;
+        }
+      }
     }
   }
   describeItem(item, itemRef) {

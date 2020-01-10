@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from './Header';
-import ActiveUpgrades from './ActiveUpgrades';
+import ActiveBuffs from './ActiveBuffs';
 import Message from './Message';
 import Pixi from './Pixi';
 import ProgressBar from './ProgressBar';
@@ -23,11 +23,11 @@ export default class App extends React.Component {
     this.mphGain = 1; // MPH gained per click, default is 1
     this.clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
     this.index = 0; // index of store catalog
-    this.activeUpgrades = []; // Array of active upgrade timeouts (empty this array when purchasing new vehicle)
+    this.activeBuffs = []; // Array of active upgrade timeouts (empty this array when purchasing new vehicle)
     this.currentVehicle = {
       name: 'Folding Bike',
       cost: 0,
-      minSpeed: 5,
+      minSpeed: 3,
       maxSpeed: new Modifier(10, 1, 1, 0)
     };
     this.state = {
@@ -100,22 +100,28 @@ export default class App extends React.Component {
         const itemModify = item.modify.bind(this);
         itemModify(item);
       }
+      // Gear is added to active buffs but is not removed
+      if (item.isGear) {
+        this.activeBuffs.push(item);
+      }
       // Remove stats after a timeout
-      if (item.cooldown && item.remove) {
+      else if (item.cooldown && item.remove) {
         const itemRemove = item.remove.bind(this);
         item.timeout = setTimeout(() => {
           itemRemove(item);
-          this.activeUpgrades.splice(this.activeUpgrades.indexOf(item),1); // remove item from array
+          this.activeBuffs.splice(this.activeBuffs.indexOf(item),1); // remove item from array
         }, item.active);
-        this.activeUpgrades.push(item);
+        this.activeBuffs.push(item);
       }
       // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
       if (item.minSpeed && item.maxSpeed) {
         // Remove all active upgrades
-        this.activeUpgrades.forEach(upgrade => {
-          clearTimeout(upgrade.timeout);
+        this.activeBuffs.forEach(buff => {
+          if (buff.timeout) {
+            clearTimeout(buff.timeout);
+            this.activeBuffs.splice(this.activeBuffs.indexOf(buff),1);
+          }
         });
-        this.activeUpgrades = [];
         this.currentVehicle = item;
         this.index++;
       }
@@ -165,7 +171,7 @@ export default class App extends React.Component {
     return (
       <div className="component-app">
         <div className="view" onClick={ this.speedUp }>
-          <ActiveUpgrades activeUpgrades={ this.activeUpgrades }/>
+          <ActiveBuffs activeBuffs={ this.activeBuffs }/>
           <Header
             speed = { this.state.speed }
             distance = { this.state.distance }

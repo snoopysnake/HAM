@@ -26,9 +26,18 @@
 	height: 100%;
 	width: 100%;
 	display: flex;
-	align-items: center;
+	/*align-items: center;*/
 	justify-content: center;
 	position: relative;
+}
+
+.item-container img {
+	height: 90px;
+	width: 90px;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 .item-name {
@@ -36,7 +45,9 @@
 	padding: 3px;
 	bottom: 0;
 	left: 0;
-	font-size: 1.3em;
+	font-size: 1em;
+	font-weight: bold;
+	color: white;
 }
 
 .item-cost {
