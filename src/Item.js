@@ -31,7 +31,8 @@ export default class Item extends React.Component {
         <div className="item-container">
           <img src={ path } alt={ this.props.item.name } />
           <div className="item-cost">{ this.props.item.available || this.props.item.cooldown ? this.props.item.cost : '' }</div>
-          <div className="item-name">{ this.props.item.available || this.props.item.cooldown ? this.props.item.name : 'SOLD OUT' }</div>
+          <div className="item-name">{ this.props.item.name }</div>
+          <div className="item-sold">{ this.props.item.available || this.props.item.cooldown ? '' : 'SOLD OUT' }</div>
         </div>
       </div>
     );

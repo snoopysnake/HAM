@@ -56,3 +56,14 @@
 	top: 0;
 	right: 0;
 }
+
+.item-sold {
+	width: 127px;
+	top: 35px;
+	position: absolute;
+	top:;
+	font-size: 1.6em;
+	font-weight: bold;
+	color: hotpink;
+	transform: rotate(45deg);
+}
