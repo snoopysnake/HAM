@@ -6,6 +6,7 @@ import Pixi from './Pixi';
 import ProgressBar from './ProgressBar';
 import Statistics from './Statistics';
 import Vehicle from './Vehicle';
+import FoldingBike from './FoldingBike';
 import Store from './Store';
 import Modifier from './Modifier';
 import './App.css';
@@ -24,11 +25,13 @@ export default class App extends React.Component {
     this.clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
     this.index = 0; // index of store catalog
     this.activeBuffs = []; // Array of active upgrade timeouts (empty this array when purchasing new vehicle)
+    this.mods = {}; // empty object for storing SVG Components
     this.currentVehicle = {
       name: 'Folding Bike',
       cost: 0,
       minSpeed: 3,
-      maxSpeed: new Modifier(10, 1, 1, 0)
+      maxSpeed: new Modifier(10, 1, 1, 0),
+      SVG: <FoldingBike />
     };
     this.state = {
       speed: 0,
@@ -88,7 +91,7 @@ export default class App extends React.Component {
   purchaseItem(item){
     // Check type of item purchased (can be either vehicle or upgrade)
     // TODO: change color based on success/fail/type of upgrade
-    if (this.state.currency >= item.cost){
+    if (this.state.currency >= item.cost) {
       // Deducts cost, displays message
       this.setState({
         currency: (this.state.currency - item.cost),
@@ -103,6 +106,13 @@ export default class App extends React.Component {
       // Gear is added to active buffs but is not removed
       if (item.isGear) {
         this.activeBuffs.push(item);
+      }
+      // Add SVG to Vehicles Component
+      if (item.isMod) {
+        // camelCase mod properties 
+        let modName = item.name.replace(' ','');
+        modName = modName.charAt(0).toLowerCase() + modName.slice(1);
+        this.mods[modName] = item.SVG;
       }
       // Remove stats after a timeout
       else if (item.cooldown && item.remove) {
@@ -195,6 +205,7 @@ export default class App extends React.Component {
           />
           <Vehicle
             currentVehicle = { this.currentVehicle }
+            mods = { this.mods }
           />
         </div>
       </div>

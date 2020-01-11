@@ -1,4 +1,4 @@
-const helmet1 = {
+const bikeHelmet = {
   name: 'Bike Helmet',
   cost: 5,
   description: 'A basic brain bucket.',
@@ -11,4 +11,4 @@ const helmet1 = {
   },
 };
 
-export { helmet1, };
+export { bikeHelmet, };

@@ -12,9 +12,74 @@
 	color: white;
 }
 
+.vehicle-mod {
+	position: absolute;
+	min-width: 200px;
+	color: white;
+	text-align: center;
+	padding: 5px;
+	user-select: none;
+	animation: mod-pulse 3s infinite;
+	z-index: 998;
+}
+
+@keyframes mod-pulse {
+  0% {
+    background-color: darkviolet;
+  }
+  50% {
+    background-color: orchid;
+  }
+  100% {
+    background-color: darkviolet;
+  }
+}
+
 .vehicle-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	height: 100%;
+	width: 100%;
+	position: relative;
+}
+
+.mod-fill {
+	cursor: pointer;
+	fill: hotpink;
+	stroke: none;
+	animation: fill-pulse 3s infinite;
+}
+
+@keyframes fill-pulse {
+  0% {
+		opacity: 0;
+  }
+  50% {
+		opacity: .3;
+  }
+  100% {
+		opacity: 0;
+  }
+}
+
+/*.mod-fill:hover {
+	opacity: 1;
+}*/
+
+.mod-line {
+	cursor: pointer;
+	animation: line-pulse 3s infinite;
+}
+
+@keyframes line-pulse {
+  0% {
+    stroke: darkviolet;
+  }
+  50% {
+    stroke: orchid;
+  }
+  100% {
+    stroke: darkviolet;
+  }
 }

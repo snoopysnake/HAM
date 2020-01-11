@@ -1,6 +1,13 @@
 <html>
-	<body>
+	<body style="display:flex;flex-direction:column;">
 		<input type="file" id="svg" name="svg" accept="image/svg">
+		<strong>For Component use (Remove first two tags & XML namespaces, changes height & style attributes)</strong>
+		<textarea id="output1" style="height:25vh;width:50vw;"></textarea>
+		<input type="button" id="save1" value="copy to clipboard" style="width:125px">
+		<strong>For export use (Remove XML namespaces, changes height)</strong>
+		<textarea id="output2" style="height:25vh;width:50vw;"></textarea>
+		<input type="button" id="save2" value="copy to clipboard" style="width:125px">
+		<h2 id="message"></h2>
 	</body>
 </html>
 <script>
@@ -11,10 +18,10 @@
 		if (input.files.length > 0) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				var readSVG = e.target.result;
-				// console.log('ORIGINAL:', readSVG);
-				var parser = new DOMParser();
-				var parseSVG = parser.parseFromString(readSVG, "application/xml");
+				const readSVG = e.target.result;
+				const parser = new DOMParser();
+				let parseSVG = parser.parseFromString(readSVG, "application/xml");
+				// ******** 1. Parse SVG for React Component ********
 				// Removes extra elements outside svg element
 				for (const child of parseSVG.childNodes) {
 					if (child.tagName != 'svg') {
@@ -22,16 +29,39 @@
 					}
 				}
 				// Set height + width as 95%, remove namespace attrs (start with 'xml')
-				const parent = parseSVG.childNodes[0];
+				let parent = parseSVG.childNodes[0];
 				parent.setAttribute('width', '95%');
 				parent.setAttribute('height', '95%');
-				for (const attr of parent.attributes) {
+				for (let attr of parent.attributes) {
 					if (attr.name.includes('xml')) {
 						parent.removeAttribute(attr.name); // BUG: This doesn't remove all the namespace attrs...
 					}
 				}
 				removeStyle(parent);
 				console.log('PARSED:', parseSVG);
+				// Display in textarea and copy to clipboard
+				let parseSVGString= new XMLSerializer().serializeToString(parseSVG.childNodes[0]);
+				const output1 = document.getElementById('output1');
+				output1.textContent = parseSVGString;
+				document.getElementById('save1').addEventListener('click', () => {
+					copy(output1, parseSVGString);
+				});
+				// ******** 2. Parse SVG for exporting to React ********
+				parseSVG = parser.parseFromString(readSVG, "application/xml");
+				parent = parseSVG.childNodes[1];
+				parent.setAttribute('width', '95%');
+				parent.setAttribute('height', '95%');
+				for (let attr of parent.attributes) {
+					if (attr.name.includes('xml')) {
+						parent.removeAttribute(attr.name); // BUG: This doesn't remove all the namespace attrs...
+					}
+				}
+				parseSVGString= new XMLSerializer().serializeToString(parseSVG);
+				const output2 = document.getElementById('output2');
+				output2.textContent = parseSVGString;
+				document.getElementById('save2').addEventListener('click', () => {
+					copy(output2, parseSVGString);
+				});
 			}
 			reader.readAsText(input.files[0]);
 		}
@@ -69,5 +99,15 @@
 			}
 		}
 		return rename;
+	}
+	function copy(output, str) {
+		// places in textarea and copies to clipboard)
+		output.select();
+		document.execCommand('copy');
+		const message = document.getElementById('message');
+		message.textContent = 'Copied to clipboard!'; 
+		setTimeout(() => {
+			message.textContent = '';
+		}, 2000);
 	}
 </script>
