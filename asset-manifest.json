@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.css": "/HAM/static/css/main.d175610b.chunk.css",
-    "main.js": "/HAM/static/js/main.56c7303d.chunk.js",
-    "main.js.map": "/HAM/static/js/main.56c7303d.chunk.js.map",
+    "main.css": "/HAM/static/css/main.8b3943c7.chunk.css",
+    "main.js": "/HAM/static/js/main.2fe89bdd.chunk.js",
+    "main.js.map": "/HAM/static/js/main.2fe89bdd.chunk.js.map",
     "runtime-main.js": "/HAM/static/js/runtime-main.44d42f43.js",
     "runtime-main.js.map": "/HAM/static/js/runtime-main.44d42f43.js.map",
-    "static/js/2.34824101.chunk.js": "/HAM/static/js/2.34824101.chunk.js",
-    "static/js/2.34824101.chunk.js.map": "/HAM/static/js/2.34824101.chunk.js.map",
+    "static/js/2.c8ad5f7f.chunk.js": "/HAM/static/js/2.c8ad5f7f.chunk.js",
+    "static/js/2.c8ad5f7f.chunk.js.map": "/HAM/static/js/2.c8ad5f7f.chunk.js.map",
     "index.html": "/HAM/index.html",
-    "precache-manifest.5f3ecf17cf07683b7eff6177607b08df.js": "/HAM/precache-manifest.5f3ecf17cf07683b7eff6177607b08df.js",
+    "precache-manifest.39482dbc0ca5f9592b60c3a9ed981e2d.js": "/HAM/precache-manifest.39482dbc0ca5f9592b60c3a9ed981e2d.js",
     "service-worker.js": "/HAM/service-worker.js",
-    "static/css/main.d175610b.chunk.css.map": "/HAM/static/css/main.d175610b.chunk.css.map",
-    "static/media/folding_bike_lightweight_pedals.9d4d07fb.svg": "/HAM/static/media/folding_bike_lightweight_pedals.9d4d07fb.svg"
+    "static/css/main.8b3943c7.chunk.css.map": "/HAM/static/css/main.8b3943c7.chunk.css.map",
+    "static/media/folding_bike_lightweight_pedals.9d4d07fb.svg": "/HAM/static/media/folding_bike_lightweight_pedals.9d4d07fb.svg",
+    "static/media/folding_bike_riser_handlebars.cf37612c.svg": "/HAM/static/media/folding_bike_riser_handlebars.cf37612c.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.44d42f43.js",
-    "static/js/2.34824101.chunk.js",
-    "static/css/main.d175610b.chunk.css",
-    "static/js/main.56c7303d.chunk.js"
+    "static/js/2.c8ad5f7f.chunk.js",
+    "static/css/main.8b3943c7.chunk.css",
+    "static/js/main.2fe89bdd.chunk.js"
   ]
 }
