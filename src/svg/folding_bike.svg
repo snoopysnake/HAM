@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="95%" height="95%" viewBox="0 0 478 353" version="1.1" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-miterlimit:1.5;">
+<svg width="100%" height="100%" viewBox="0 0 478 353" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-miterlimit:1.5;">
     <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
         <path d="M411.318,154.456L412.536,152.751L411.866,150.255L397.39,155.47L398.876,158.306L400.473,158.306" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.83px;"/>
     </g>
@@ -607,7 +607,7 @@
     <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
         <path d="M253.446,235.051L247.061,223.432" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.83px;"/>
     </g>
-    <g id="folding_bike_lightweight_pedals" transform="matrix(1,0,0,1,-62.5036,-2.61547)">
+    <g id="stock-pedals" transform="matrix(1,0,0,1,-62.5036,-2.61547)">
         <g transform="matrix(1.03248,0,0,1,-9.49882,0)">
             <path d="M288.161,307.364L298.087,308.432L298.715,310.945L286.591,309.877L288.161,307.364Z" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.82px;"/>
         </g>
@@ -711,22 +711,14 @@
     <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
         <path d="M405.537,110.939C404.909,113.826 406.133,121.86 406.982,124.31C407.621,126.156 409.575,147.519 409.575,147.519" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.42px;"/>
     </g>
-    <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
-        <path d="M392.845,126.774L380.633,62.658L391.041,60.16L405.474,121.917" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.83px;"/>
-    </g>
-    <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
-        <path d="M376.143,58.2L376.934,63.128L395.55,59.113C395.55,59.113 397.55,58.11 396.95,55.949C396.316,53.67 393.543,54.124 393.543,54.124L376.143,58.2Z" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.83px;"/>
-    </g>
-    <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
+    <g id="stock-handlebars" transform="matrix(1,0,0,1,-62.5036,-2.61547)">
         <path d="M389.343,54.612L380.269,14.354" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.83px;"/>
-    </g>
-    <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
         <path d="M371.952,18.372L380.016,57.041" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.83px;"/>
-    </g>
-    <g transform="matrix(1.06532,0,0,1.06532,-86.8286,-3.78944)">
-        <path d="M372.038,4.913C378.507,2.261 380.823,8.43 380.804,10.577C380.766,15.025 378.633,15.76 376.15,17.094C373.525,18.503 365.056,19.033 365.056,19.033C365.056,19.033 362.959,18.798 362.418,17.947C361.62,16.692 363.737,14.068 363.737,14.068C363.737,14.068 368.853,6.219 372.038,4.913Z" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.78px;"/>
-    </g>
-    <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
+        <g transform="matrix(1.06532,0,0,1.06532,-24.325,-1.17397)">
+            <path d="M372.038,4.913C378.507,2.261 380.823,8.43 380.804,10.577C380.766,15.025 378.633,15.76 376.15,17.094C373.525,18.503 365.056,19.033 365.056,19.033C365.056,19.033 362.959,18.798 362.418,17.947C361.62,16.692 363.737,14.068 363.737,14.068C363.737,14.068 368.853,6.219 372.038,4.913Z" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.78px;"/>
+        </g>
         <path d="M378.735,4.265C378.735,4.265 381.371,3.881 382.04,4.973C382.709,6.065 382.749,10.817 382.749,10.817L381.096,12.293" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.83px;"/>
+        <path d="M392.845,126.774L380.633,62.658L391.041,60.16L405.474,121.917" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.83px;"/>
+        <path d="M376.143,58.2L376.934,63.128L395.55,59.113C395.55,59.113 397.55,58.11 396.95,55.949C396.316,53.67 393.543,54.124 393.543,54.124L376.143,58.2Z" style="fill:none;stroke:rgb(255,0,0);stroke-width:0.83px;"/>
     </g>
 </svg>

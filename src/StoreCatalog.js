@@ -2,6 +2,7 @@ import React from 'react';
 import Modifier from './Modifier';
 import { bikeHelmet, } from './GearUpgrades';
 import { ReactComponent as LightweightPedals } from './svg/folding_bike_lightweight_pedals.svg';
+import { ReactComponent as RiserHandlebars } from './svg/folding_bike_riser_handlebars.svg';
 
 export var storeCatalog = [
   {
@@ -20,6 +21,7 @@ export var storeCatalog = [
           this.currentVehicle.maxSpeed.b+=1;
         },
         isMod: true,
+        SVG: <RiserHandlebars />
       },
       {
         name: 'Lightweight Pedals',
