@@ -1,0 +1,21 @@
+.component-active-buffs {
+	position: absolute;
+	color: white;
+	display: flex;
+	flex-direction: row;
+}
+
+.component-buff {
+	height: 50px;
+	width: 50px;
+	background-color: purple;
+	border: 4px solid pink;
+	font-size: .7em;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+}
+
+.component-buff img {
+	filter: invert(100%);
+}

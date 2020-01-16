@@ -1,21 +1,44 @@
 .component-item {
-	position: relative;
-}
-
-.item {
+	cursor: pointer;
 	height: 110px;
 	width: 110px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	margin: 4px;
 	border: 1px black solid;
 	user-select: none;
+}
+
+.available:hover {
+	background-color: aqua;
+}
+
+.available {
+	background-color: aquamarine;
+}
+
+.temp-unavailable {
+	background-color: darkgray;
+}
+
+.unavailable {
+	background-color: gray;
+}
+
+.item-container {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	/*align-items: center;*/
+	justify-content: center;
 	position: relative;
 }
 
-.item:hover {
-	background-color: aqua;
+.item-container img {
+	height: 90px;
+	width: 90px;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: -webkit-crisp-edges;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 .item-name {
@@ -23,7 +46,13 @@
 	padding: 3px;
 	bottom: 0;
 	left: 0;
-	font-size: 1.3em;
+	font-size: 1em;
+	font-weight: bold;
+	color: white;
+}
+
+.name-unavailable {
+	color: lightgray;
 }
 
 .item-cost {
@@ -31,55 +60,16 @@
 	padding: 1px;
 	top: 0;
 	right: 0;
+	color: darkblue;
 }
 
-
-/****************
-	Tooltips css
-****************/
-
-/* Tooltip container */
-.tooltip {
-  position: relative;
-  display: block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-}
-
-/* Tooltip text */
-.tooltip .tooltiptext {
-  opacity: 0;
-	visibility: hidden;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  width: 100%;
-	right: -10%;
-	top: auto;
-	z-index: 10;
-  bottom: 100%;
-  width: 140px;
-  line-height: 16px;
-  opacity: 0.85;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  opacity: 1;
-	visibility: visible;
-}
-
-/* Arrow pointing down below the tooltip */
-.tooltip .tooltiptext::after {
-  content: " ";
-  position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
+.item-sold {
+	width: 127px;
+	top: 35px;
+	position: absolute;
+	top:;
+	font-size: 1.6em;
+	font-weight: bold;
+	color: pink;
+	transform: rotate(45deg);
 }
