@@ -22,7 +22,6 @@ export default class Pixi extends React.Component {
     function centeredRedSquare(app){
       const graphics = new PIXI.Graphics();
       // Rectangle
-      console.log(graphics);
       graphics.position.x += (parent.clientWidth / 2);
       graphics.position.y += (parent.clientHeight / 2);
       graphics.beginFill(0xDE3249);
