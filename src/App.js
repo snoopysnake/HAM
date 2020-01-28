@@ -178,15 +178,6 @@ export default class App extends React.Component {
     }
   }
 
-////////////////////////////// Render Functions //////////////////////////////
-  shouldComponentUpdate(nextProps, nextState){
-    return (
-        (Math.floor(this.state.speed*100)/100) != (Math.floor(nextState.speed*100)/100) ||
-        (Math.floor(this.state.distance*100)/100) != (Math.floor(nextState.distance*100)/100) ||
-        Math.floor(this.state.currency) != Math.floor(nextState.currency) ||
-        Math.floor(this.state.time) != Math.floor(nextState.time)
-      );
-  }
   render() {
     return (
       <div className="component-app">
