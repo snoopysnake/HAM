@@ -24,6 +24,7 @@ export default class App extends React.Component {
     this.mphGain = 1; // MPH gained per click, default is 1
     this.clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
     this.index = 0; // index of store catalog
+    this.purchasedUpgrades = []; // Items purchased from store - mods are reset on vehicle upgrade
     this.activeBuffs = []; // Array of active upgrade timeouts (empty this array when purchasing new vehicle)
     this.mods = {}; // empty object for storing SVG Components
     this.currentVehicle = {
