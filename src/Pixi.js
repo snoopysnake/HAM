@@ -28,6 +28,9 @@ export default class Pixi extends React.Component {
       this.pixiContainer.appendChild(this.app.view);
     }
   };
+  shouldComponentUpdate() {
+    return false;
+  }
   render() {
     return (
       <div className="component-pixi" ref={this.updatePixiContainer} />
