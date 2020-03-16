@@ -11,8 +11,7 @@ export default class Store extends React.Component {
     this.describeItem = this.describeItem.bind(this);
     this.tooltipRef = React.createRef();
     this.itemRef = null; // Used to get position of item hovered over
-    this.opacity = 0; // Prevents tooltip from showing up early
-    this.state = { description: null, modifier: null };
+    this.state = { description: null, modifier: null, display: 0 };
   }
   purchaseNewVehicle() {
     this.props.purchaseItem(storeCatalog[this.props.index].nextVehicle);
@@ -66,16 +65,21 @@ export default class Store extends React.Component {
       this.itemRef = null;
       this.setState({
         description: null,
-        modifier: null
+        modifier: null,
+        display: 0
       });
-      this.opacity = 0;
     }
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    return nextProps.currency < this.props.currency ||
+      nextState.description !== this.state.description || nextState.modifier !== this.state.modifier ||
+      nextState.display !== this.state.display;
+  }
   componentDidUpdate() {
-    if (this.state.description && this.state.modifier && this.opacity === 0) {
+    if (this.state.description && this.state.modifier && this.state.display === 0) {
       this.descX = this.itemRef.current.getBoundingClientRect().x - 75;
       this.descY = this.itemRef.current.getBoundingClientRect().y - this.tooltipRef.current.clientHeight - 5;
-      this.opacity = 1;
+      this.setState({display: 1});
     }
   }
   render() {
@@ -112,7 +116,7 @@ export default class Store extends React.Component {
             </div>
           }
         </div>
-        <div className="tooltip" style={ this.state.description ? { left:this.descX, top:this.descY, opacity:this.opacity } : { display: 'none' } } ref={ this.tooltipRef }>
+        <div className="tooltip" style={ this.state.description ? { left:this.descX, top:this.descY, opacity:this.state.display } : { display: 'none' } } ref={ this.tooltipRef }>
           <span>{ this.state.description }</span>
           <span className="modifier">{ this.state.modifier }</span>
         </div>

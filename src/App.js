@@ -47,10 +47,10 @@ export default class App extends React.Component {
       () => this.shiftTitle(),
       666
     );
-    // this.tickTimer = setInterval(
-    //   () => this.tick(),
-    //   1000 / 60
-    // );
+    this.tickTimer = setInterval(
+      () => this.tick(),
+      1000 / 60
+    );
   }
   componentWillUnmount() {
     clearInterval(this.tickTimer);
