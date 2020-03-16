@@ -118,7 +118,7 @@ export default class App extends React.Component {
         this.setState(state => ({
           mods: {                   // object that we want to update
             ...state.mods,    // keep all other key-value pairs
-            modName: item.SVG       // update the value of specific key
+            [modName]: item.SVG       // update the value of specific key
           }
         }));
       }
@@ -139,8 +139,7 @@ export default class App extends React.Component {
       }
       // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
       if (item.minSpeed && item.maxSpeed) {
-        // Remove all active upgrades
-        console.log(this.state.activeBuffs)
+        // Remove all active upgrades and mods
         this.setState({
           activeBuffs: this.state.activeBuffs.filter(buff => {
             if (buff.remove) {
@@ -152,6 +151,7 @@ export default class App extends React.Component {
             return true;
           }),
         });
+        this.setState({mods: {}});
         this.currentVehicle = item;
         this.index++;
       }

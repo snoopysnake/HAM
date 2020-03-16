@@ -6,7 +6,6 @@ export default class ActiveBuffs extends React.Component {
     return nextProps.activeBuffs.length !== this.props.activeBuffs.length;
   }
   render() {
-    console.log('ActiveBuffs.js rendered')
     const activeBuffs = this.props.activeBuffs.map((buff) => {
       return (
         <Buff

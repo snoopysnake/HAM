@@ -8,7 +8,7 @@ export default class FoldingBike extends React.Component {
     this.hideMod = this.hideMod.bind(this);
   }
   displayMod(e, modName) {
-    this.setState({ x: e.nativeEvent.offsetX + 9, y: e.nativeEvent.offsetY - 9, mod: modName, opacity: 1 });
+    this.setState({ x: e.nativeEvent.offsetX - 215, y: e.nativeEvent.offsetY - 9, mod: modName, opacity: 1 });
   }
   hideMod() {
     this.setState({ opacity: 0 });
