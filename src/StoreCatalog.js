@@ -39,8 +39,8 @@ export var storeCatalog = [
         cost: 10,
         description: 'This is a basic reusable upgrade.',
         available: true,
-        active: 5000, // ms upgrade active for
-        cooldown: 6000, // ms before next purchase
+        active: 4000, // ms upgrade active for
+        cooldown: 4000, // ms before next purchase
         modifier: '+10 max speed',
         modify(item) {
           console.log(`${item.modifier}...`);

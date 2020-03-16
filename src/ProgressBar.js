@@ -2,6 +2,9 @@ import React from 'react';
 import './ProgressBar.css';
 
 export default class ProgressBar extends React.Component{
+	shouldComponentUpdate(nextProps, nextState) {
+		return nextProps.percent !== this.props.percent;
+	}
   render() {
     return(
       <div className="component-progress-bar">

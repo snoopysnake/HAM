@@ -24,8 +24,6 @@ export default class App extends React.Component {
     this.mphGain = 1; // MPH gained per click, default is 1
     this.clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
     this.index = 0; // index of store catalog
-    this.activeBuffs = []; // Array of active upgrade timeouts (empty this array when purchasing new vehicle)
-    this.mods = {}; // empty object for storing SVG Components
     this.currentVehicle = {
       name: 'Folding Bike',
       cost: 0,
@@ -38,6 +36,8 @@ export default class App extends React.Component {
       distance: 0,
       time: 0,
       currency: 1000,
+      activeBuffs: [], // Array of active upgrade timeouts (empty this array when purchasing new vehicle),
+      mods: {}, // empty object for storing SVG Components
     };
     this.speedUp = this.speedUp.bind(this);
     this.purchaseItem = this.purchaseItem.bind(this);
@@ -47,10 +47,10 @@ export default class App extends React.Component {
       () => this.shiftTitle(),
       666
     );
-    this.tickTimer = setInterval(
-      () => this.tick(),
-      1000 / 60
-    );
+    // this.tickTimer = setInterval(
+    //   () => this.tick(),
+    //   1000 / 60
+    // );
   }
   componentWillUnmount() {
     clearInterval(this.tickTimer);
@@ -96,8 +96,9 @@ export default class App extends React.Component {
       this.setState({
         currency: (this.state.currency - item.cost),
       });
-      this.message = `${item.name} purchased!`
-      console.log(this.message);
+      let message = `${item.name} purchased!`
+      this.setState({message: message});
+      console.log(message);
       // Modify stats
       if (item.modify) {
         const itemModify = item.modify.bind(this);
@@ -105,56 +106,74 @@ export default class App extends React.Component {
       }
       // Gear is added to active buffs but is not removed
       if (item.isGear) {
-        this.activeBuffs.push(item);
+        this.setState({
+          activeBuffs: [...this.state.activeBuffs, item], // Add gear
+        });
       }
       // Add SVG to Vehicles Component
       if (item.isMod) {
         // camelCase mod properties 
         let modName = item.name.replace(' ','');
         modName = modName.charAt(0).toLowerCase() + modName.slice(1);
-        this.mods[modName] = item.SVG;
+        this.setState(state => ({
+          mods: {                   // object that we want to update
+            ...state.mods,    // keep all other key-value pairs
+            modName: item.SVG       // update the value of specific key
+          }
+        }));
       }
       // Remove stats after a timeout
       else if (item.cooldown && item.remove) {
         const itemRemove = item.remove.bind(this);
         item.timeout = setTimeout(() => {
           itemRemove(item);
-          this.activeBuffs.splice(this.activeBuffs.indexOf(item),1); // remove item from array
+          this.setState({
+            activeBuffs: this.state.activeBuffs.filter(buff => {
+              return buff.name !== item.name; 
+            }),
+          });
         }, item.active);
-        this.activeBuffs.push(item);
+        this.setState({
+          activeBuffs: [...this.state.activeBuffs, item], // Add buff
+        });
       }
       // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
       if (item.minSpeed && item.maxSpeed) {
         // Remove all active upgrades
-        this.activeBuffs.forEach(buff => {
-          if (buff.timeout) {
-            clearTimeout(buff.timeout);
-            this.activeBuffs.splice(this.activeBuffs.indexOf(buff),1);
-          }
+        console.log(this.state.activeBuffs)
+        this.setState({
+          activeBuffs: this.state.activeBuffs.filter(buff => {
+            if (buff.remove) {
+              const buffRemove = buff.remove.bind(this);
+              buffRemove(buff);
+              clearTimeout(buff.timeout);
+              return false;
+            }
+            return true;
+          }),
         });
         this.currentVehicle = item;
         this.index++;
       }
     } else {
-      this.message = `Not enough credits for ${item.name}!`
+      this.setState({message: `Not enough credits for ${item.name}!`});
     }
     this.fadeMessage();
   }
   fadeMessage() {
     // A convoluted way to get message to fade correctly
-    this.fade = false; // If true, sets fade class to message after 1 second
+    this.setState({fadeMessage: false}); // If true, sets fade class to message after 1 second
     clearTimeout(this.messageTimer); // Resets timer when clicked
     clearTimeout(this.fadeTimer); // ^^
     this.messageTimer = setTimeout(
       () => {
-        this.message = '' // Clears message after 2 sec
-        this.fade = false;
+        this.setState({message: '', fadeMessage: false}); // Clears message after 2 sec
       },
       2000
     );
     this.fadeTimer = setTimeout(
       () => {
-        this.fade = true;
+        this.setState({fadeMessage: true});
       },
       1000
     );
@@ -181,7 +200,7 @@ export default class App extends React.Component {
     return (
       <div className="component-app">
         <div className="view" onClick={ this.speedUp }>
-          <ActiveBuffs activeBuffs={ this.activeBuffs }/>
+          <ActiveBuffs activeBuffs={ this.state.activeBuffs }/>
           <Header
             speed = { this.state.speed }
             distance = { this.state.distance }
@@ -189,7 +208,7 @@ export default class App extends React.Component {
           />
           <Pixi />
         </div>
-        <Message message={ this.message } fade={ this.fade } />
+        <Message message={ this.state.message } fade={ this.state.fadeMessage } />
         <ProgressBar percent={ (this.state.distance - Math.floor(this.state.distance)) * 100 } />
         <div className="menu">
           <Statistics
@@ -205,7 +224,7 @@ export default class App extends React.Component {
           />
           <Vehicle
             currentVehicle = { this.currentVehicle }
-            mods = { this.mods }
+            mods = { this.state.mods }
           />
         </div>
       </div>
