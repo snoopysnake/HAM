@@ -10,6 +10,11 @@ export default class Pixi extends React.Component {
       autoResize: true,
       resolution: devicePixelRatio
     });
+    const girlTexture = PIXI.Texture.from('./assets/girl_side.png');
+    this.girl = new PIXI.Sprite(girlTexture);
+    this.girl.x = this.app.screen.width / 2;
+    this.girl.y = this.app.screen.height;
+    this.app.stage.addChild(this.girl);
   }
   componentDidMount() {
     window.addEventListener('resize', this.resize);
@@ -21,6 +26,8 @@ export default class Pixi extends React.Component {
   resize = () => {
     const parent = this.app.view.parentNode;
     this.app.renderer.resize(parent.clientWidth, parent.clientHeight);
+    this.girl.x = this.app.screen.width / 2 - 70;
+    this.girl.y = this.app.screen.height - 820;
   }
   updatePixiContainer = element => {
     this.pixiContainer = element;
