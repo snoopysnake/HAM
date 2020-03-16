@@ -77,8 +77,8 @@ export default class Store extends React.Component {
   }
   componentDidUpdate() {
     if (this.state.description && this.state.modifier && this.state.display === 0) {
-      this.descX = this.itemRef.current.getBoundingClientRect().x - 75;
-      this.descY = this.itemRef.current.getBoundingClientRect().y - this.tooltipRef.current.clientHeight - 5;
+      this.descX = this.itemRef.current.getBoundingClientRect().x - 285;
+      this.descY = this.itemRef.current.getBoundingClientRect().y + this.tooltipRef.current.clientHeight/4;
       this.setState({display: 1});
     }
   }

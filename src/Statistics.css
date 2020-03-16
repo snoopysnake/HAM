@@ -1,8 +1,7 @@
 .component-statistics {
 	background-color: #ff71ce;
-	width: 15%;
-	padding: 0 14px; /* Store must also match this padding */
-	overflow-y: scroll;
+	padding: 0 10px; /* Store must also match this padding */
+	height: 100%;
 }
 
 .component-stat {

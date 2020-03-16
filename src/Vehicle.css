@@ -1,7 +1,7 @@
 .component-vehicle {
-	background-color: #01cdfe;
-	width: 35%;
-	margin-left: 10px;
+	background-color: black;
+	width: 368px;
+	height: 368px;
 	position: relative;
 }
 

@@ -1,9 +1,13 @@
 .component-header {
 	position: absolute;
 	color: white;
-	padding: 0 20px;
-	width: calc(100% - 40px);
-	height: 100%;
+	padding: 0 10px;
+	width: calc(100% - 20px);
+	height: calc(100% - 20px);
+}
+
+.component-header h1 {
+	margin: 0;
 }
 
 .top {
@@ -15,6 +19,6 @@
 	position: absolute;
 	display: flex;
 	justify-content: space-between;
-	width: calc(100% - 40px);
+	width: calc(100% - 20px);
 	bottom: 0px;
 }

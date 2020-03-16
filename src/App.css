@@ -1,21 +1,67 @@
 .component-app {
   height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+.left-sidebar {
+  width: 15%;
 }
 
 .view {
-  height: 55%;
+  height: 100%;
   position: relative;
   user-select: none;
+  cursor: pointer;
 }
 
-.menu {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	height: calc(45% - 40px);
-	width: calc(100% - 20px);
-	padding: 10px;
-	background-color: #05ffa1;
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #05ffa1;
+  height: 100%;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 800px) {
+  .view {
+    width: calc(100% - 15% - 128px);
+  }
+
+  .right-sidebar {
+    width: 128px;
+    min-width: 128px;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  .view {
+    width: calc(100% - 15% - 248px);
+  }
+
+  .right-sidebar {
+    width: 248px;
+    min-width: 248px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .view {
+    width: calc(100% - 15% - 368px);
+  }
+
+  .right-sidebar {
+    width: 368px;
+    min-width: 368px;
+  }
 }
 
 .title {

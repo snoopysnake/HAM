@@ -199,7 +199,16 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="component-app">
+        <div className="left-sidebar">
+          <Statistics
+            currentVehicle = { this.currentVehicle }
+            speed = { this.state.speed }
+            distance = { this.state.distance }
+            time = { this.state.time }
+          />
+        </div>
         <div className="view" onClick={ this.speedUp }>
+          <Message message={ this.state.message } fade={ this.state.fadeMessage } />
           <ActiveBuffs activeBuffs={ this.state.activeBuffs }/>
           <Header
             speed = { this.state.speed }
@@ -207,16 +216,9 @@ export default class App extends React.Component {
             currency = { this.state.currency }
           />
           <Pixi />
+          <ProgressBar percent={ (this.state.distance - Math.floor(this.state.distance)) * 100 } />
         </div>
-        <Message message={ this.state.message } fade={ this.state.fadeMessage } />
-        <ProgressBar percent={ (this.state.distance - Math.floor(this.state.distance)) * 100 } />
-        <div className="menu">
-          <Statistics
-            currentVehicle = { this.currentVehicle }
-            speed = { this.state.speed }
-            distance = { this.state.distance }
-            time = { this.state.time }
-          />
+        <div className="right-sidebar">
           <Store
             index = { this.index }
             purchaseItem = { this.purchaseItem }
