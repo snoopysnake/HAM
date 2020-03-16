@@ -16,7 +16,9 @@ export default class Vehicle extends React.Component {
       	<div className="vehicle-name">
       		{this.props.currentVehicle.name}
       	</div>
-        { vehicle }
+        <div className="vehicle-container">
+          { vehicle }
+        </div>
       </div>
     );
   }

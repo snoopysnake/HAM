@@ -19,7 +19,48 @@ export default class FoldingBike extends React.Component {
         <div className="vehicle-mod" style={{ opacity: this.state.opacity, left:this.state.x, top:this.state.y }}>
           { this.state.mod }
         </div>
-        <svg width="95%" height="95%" viewBox="0 0 478 353" version="1.1" fillRule="evenodd" clipRule="evenodd" strokeLinecap="round" strokeMiterlimit="1.5">
+          <svg width="95%" height="95%" viewBox="0 0 478 353" version="1.1" fillRule="evenodd" clipRule="evenodd" strokeLinecap="round" strokeMiterlimit="1.5">
+            { !this.props.riserHandlebars &&
+              <g id="stock-handlebars">
+                <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
+                    <path d="M392.845,126.774L380.633,62.658L391.041,60.16L405.474,121.917" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
+                    <path d="M376.143,58.2L376.934,63.128L395.55,59.113C395.55,59.113 397.55,58.11 396.95,55.949C396.316,53.67 393.543,54.124 393.543,54.124L376.143,58.2Z" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
+                    <path d="M389.343,54.612L380.269,14.354" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
+                    <path d="M371.952,18.372L380.016,57.041" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
+                </g>
+                <g transform="matrix(1.06532,0,0,1.06532,-86.8286,-3.78944)">
+                    <path d="M372.038,4.913C378.507,2.261 380.823,8.43 380.804,10.577C380.766,15.025 378.633,15.76 376.15,17.094C373.525,18.503 365.056,19.033 365.056,19.033C365.056,19.033 362.959,18.798 362.418,17.947C361.62,16.692 363.737,14.068 363.737,14.068C363.737,14.068 368.853,6.219 372.038,4.913Z" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.78px"/>
+                </g>
+                <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
+                    <path d="M378.735,4.265C378.735,4.265 381.371,3.881 382.04,4.973C382.709,6.065 382.749,10.817 382.749,10.817L381.096,12.293" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
+                </g>
+              </g>
+            }
+            <g onMouseMove={ (e) => this.displayMod(e,'Riser Handlebars') } onMouseLeave={ this.hideMod }>
+              { this.props.riserHandlebars }
+            </g>
+            { !this.props.lightweightPedals &&
+              (<g id="stock-pedals" transform="matrix(1,0,0,1,-62.5036,-2.61547)">
+                  <g transform="matrix(1.03248,0,0,1,-9.49882,0)">
+                      <path d="M288.161,307.364L298.087,308.432L298.715,310.945L286.591,309.877L288.161,307.364Z" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.82px"/>
+                  </g>
+                  <g transform="matrix(1.10264,0,0,0.992807,-30.0201,2.32502)">
+                      <path d="M297.353,308.158L301.527,308.558L303.239,311.385C303.529,312.388 303.136,312.943 301.919,312.955L282.947,310.819C282.067,310.66 282.022,309.99 282.508,308.994L284.133,306.795L287.99,307.2" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.79px"/>
+                  </g>
+                  <g transform="matrix(1.10264,0,0,1.32405,-30.1246,-100.303)">
+                      <path d="M303.432,311.778L303.08,315.422C303.08,315.422 303.106,316.377 302.146,316.907C301.659,317.176 298.847,316.907 298.847,316.907L284.362,315.422C284.362,315.422 282.909,315.238 282.215,315.112C281.504,314.983 281.717,313.4 281.717,313.4L282.215,309.897" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.68px" strokeLinecap="butt"/>
+                  </g>
+              </g>)
+            }
+            <g onMouseMove={ (e) => this.displayMod(e,'Lightweight Pedals') } onMouseLeave={ this.hideMod }>
+              { this.props.lightweightPedals }
+            </g>
             <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
                 <path d="M411.318,154.456L412.536,152.751L411.866,150.255L397.39,155.47L398.876,158.306L400.473,158.306" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
             </g>
@@ -626,22 +667,6 @@ export default class FoldingBike extends React.Component {
             <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
                 <path d="M253.446,235.051L247.061,223.432" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
             </g>
-              { !this.props.lightweightPedals &&
-                (<g id="lightweight-pedals" transform="matrix(1,0,0,1,-62.5036,-2.61547)">
-                    <g transform="matrix(1.03248,0,0,1,-9.49882,0)">
-                        <path d="M288.161,307.364L298.087,308.432L298.715,310.945L286.591,309.877L288.161,307.364Z" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.82px"/>
-                    </g>
-                    <g transform="matrix(1.10264,0,0,0.992807,-30.0201,2.32502)">
-                        <path d="M297.353,308.158L301.527,308.558L303.239,311.385C303.529,312.388 303.136,312.943 301.919,312.955L282.947,310.819C282.067,310.66 282.022,309.99 282.508,308.994L284.133,306.795L287.99,307.2" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.79px"/>
-                    </g>
-                    <g transform="matrix(1.10264,0,0,1.32405,-30.1246,-100.303)">
-                        <path d="M303.432,311.778L303.08,315.422C303.08,315.422 303.106,316.377 302.146,316.907C301.659,317.176 298.847,316.907 298.847,316.907L284.362,315.422C284.362,315.422 282.909,315.238 282.215,315.112C281.504,314.983 281.717,313.4 281.717,313.4L282.215,309.897" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.68px" strokeLinecap="butt"/>
-                    </g>
-                </g>)
-              }
-            <g onMouseMove={ (e) => this.displayMod(e,'Lightweight Pedals') } onMouseLeave={ this.hideMod }>
-              { this.props.lightweightPedals }
-            </g>
             <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
                 <path d="M456.575,217.389L470.432,274.961" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
             </g>
@@ -734,24 +759,6 @@ export default class FoldingBike extends React.Component {
             </g>
             <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
                 <path d="M405.537,110.939C404.909,113.826 406.133,121.86 406.982,124.31C407.621,126.156 409.575,147.519 409.575,147.519" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.42px"/>
-            </g>
-            <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
-                <path d="M392.845,126.774L380.633,62.658L391.041,60.16L405.474,121.917" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
-            </g>
-            <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
-                <path d="M376.143,58.2L376.934,63.128L395.55,59.113C395.55,59.113 397.55,58.11 396.95,55.949C396.316,53.67 393.543,54.124 393.543,54.124L376.143,58.2Z" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
-            </g>
-            <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
-                <path d="M389.343,54.612L380.269,14.354" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
-            </g>
-            <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
-                <path d="M371.952,18.372L380.016,57.041" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
-            </g>
-            <g transform="matrix(1.06532,0,0,1.06532,-86.8286,-3.78944)">
-                <path d="M372.038,4.913C378.507,2.261 380.823,8.43 380.804,10.577C380.766,15.025 378.633,15.76 376.15,17.094C373.525,18.503 365.056,19.033 365.056,19.033C365.056,19.033 362.959,18.798 362.418,17.947C361.62,16.692 363.737,14.068 363.737,14.068C363.737,14.068 368.853,6.219 372.038,4.913Z" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.78px"/>
-            </g>
-            <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">
-                <path d="M378.735,4.265C378.735,4.265 381.371,3.881 382.04,4.973C382.709,6.065 382.749,10.817 382.749,10.817L381.096,12.293" fill="none" stroke="rgb(255,255,255)" strokeWidth="0.83px"/>
             </g>
         </svg>
       </div>
