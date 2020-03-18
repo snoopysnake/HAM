@@ -4,13 +4,13 @@
 	display: flex;
 	flex-direction: row;
 	height: calc(100% - 360px);
+	width: 100%;
 }
 
 .catalog {
 	display: flex;
 	flex-direction: column;
 	padding: 0 4px;
-	width: 100%;
 	overflow-y: scroll;
 	scrollbar-width: none;
 }

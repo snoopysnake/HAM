@@ -111,7 +111,7 @@ export default class App extends React.Component {
         });
       }
       // Add SVG to Vehicles Component
-      if (item.isMod) {
+      else if (item.isMod) {
         // camelCase mod properties 
         let modName = item.name.replace(' ','');
         modName = modName.charAt(0).toLowerCase() + modName.slice(1);
@@ -138,7 +138,7 @@ export default class App extends React.Component {
         });
       }
       // Bought a vehicle (only vehicles have minSpeed and maxSpeed properties)
-      if (item.minSpeed && item.maxSpeed) {
+      else if (item.minSpeed && item.maxSpeed) {
         // Remove all active upgrades and mods
         this.setState({
           activeBuffs: this.state.activeBuffs.filter(buff => {
@@ -215,7 +215,10 @@ export default class App extends React.Component {
             distance = { this.state.distance }
             currency = { this.state.currency }
           />
-          <Pixi />
+          <Pixi
+            speed = { this.state.speed }
+            currentVehicle = { this.currentVehicle }
+          />
           <ProgressBar percent={ (this.state.distance - Math.floor(this.state.distance)) * 100 } />
         </div>
         <div className="right-sidebar">

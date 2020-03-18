@@ -7,14 +7,22 @@ export default class Pixi extends React.Component {
     super(props);
     this.pixiContainer = null;
     this.app = new PIXI.Application({
-      autoResize: true,
-      resolution: devicePixelRatio
+      backgroundColor: '0xe8a856',
     });
     const girlTexture = PIXI.Texture.from('./assets/girl_side.png');
     this.girl = new PIXI.Sprite(girlTexture);
     this.girl.x = this.app.screen.width / 2;
     this.girl.y = this.app.screen.height;
+    this.girl.scale = new PIXI.Point(0.75, 0.75);
     this.app.stage.addChild(this.girl);
+    let ticker = PIXI.Ticker.shared;
+    ticker.start();
+    ticker.add(time => {
+    });
+    const blurFilter = new PIXI.filters.BlurFilter();
+    const colorMatrix = new PIXI.filters.ColorMatrixFilter();
+    // colorMatrix.lsd(1);
+    this.app.stage.filters = [colorMatrix];
   }
   componentDidMount() {
     window.addEventListener('resize', this.resize);
