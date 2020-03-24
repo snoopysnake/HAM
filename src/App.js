@@ -1,4 +1,5 @@
 import React from 'react';
+import * as PIXI from 'pixi.js'
 import Header from './Header';
 import ActiveBuffs from './ActiveBuffs';
 import Message from './Message';
@@ -11,9 +12,25 @@ import Store from './Store';
 import Modifier from './Modifier';
 import './App.css';
 
-// const ticksPerSecond = 60; // Defunct now that we use elapsed time
+let title = '【﻿ＨＡＭ】ＶａｐｏｒＤｒｉｖｅ​​';
 const milesToMph = 0.000277778;
-var title = '【﻿ＨＡＭ】ＶａｐｏｒＤｒｉｖｅ​​';
+const app = new PIXI.Application({
+  backgroundColor: '0xe8a856',
+});
+let pixiSprites = {}; 
+app.loader
+.add('girl', './assets/girl_side.png')
+.load(onAssetsLoaded);
+
+function onAssetsLoaded(loader, res) {
+  const parent = app.view.parentNode;
+  const girl = new PIXI.Sprite(res.girl.texture);
+  app.stage.addChild(girl);
+  pixiSprites.girl = girl;
+  girl.scale = new PIXI.Point(parent.clientHeight/960, parent.clientHeight/960);
+  girl.x = 0;
+  girl.y = parent.clientHeight - girl.height;
+}
 
 export default class App extends React.Component {
   constructor(props) {
@@ -41,6 +58,17 @@ export default class App extends React.Component {
     };
     this.speedUp = this.speedUp.bind(this);
     this.purchaseItem = this.purchaseItem.bind(this);
+
+    app.loader.onComplete.add(() => {
+      let ticker = PIXI.Ticker.shared;
+      ticker.start();
+      const maxWidth = app.view.parentNode.clientWidth - pixiSprites.girl.width;
+      ticker.add(time => {
+        let girlPosition = (this.state.speed - this.currentVehicle.minSpeed) / (this.currentVehicle.maxSpeed.total()
+          - this.currentVehicle.minSpeed) * maxWidth;
+        pixiSprites.girl.x = girlPosition < maxWidth ? girlPosition : maxWidth;
+      });  
+    });    
   }
   componentDidMount() {
     this.titleTimer = setInterval (
@@ -216,6 +244,8 @@ export default class App extends React.Component {
             currency = { this.state.currency }
           />
           <Pixi
+            app = { app }
+            sprites = { pixiSprites }
             speed = { this.state.speed }
             currentVehicle = { this.currentVehicle }
           />

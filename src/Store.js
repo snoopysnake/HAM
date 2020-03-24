@@ -11,7 +11,7 @@ export default class Store extends React.Component {
     this.describeItem = this.describeItem.bind(this);
     this.tooltipRef = React.createRef();
     this.itemRef = null; // Used to get position of item hovered over
-    this.state = { description: null, modifier: null, display: 0 };
+    this.state = { description: null, modifier: null, display: 0, onCooldown: 0 };
   }
   purchaseNewVehicle() {
     this.props.purchaseItem(storeCatalog[this.props.index].nextVehicle);
@@ -21,8 +21,14 @@ export default class Store extends React.Component {
     if (this.props.currency >= item.cost) {
       item.available = false;
       if (item.cooldown) {
+        this.setState(prevState => {
+          return {onCooldown: prevState.onCooldown + 1}
+        });
         setTimeout(() => {
           item.available = true;
+          this.setState(prevState => {
+            return {onCooldown: prevState.onCooldown - 1}
+          });  
         }, item.cooldown);
       }
       if (item.isGear) {
@@ -73,7 +79,7 @@ export default class Store extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     return nextProps.currency < this.props.currency ||
       nextState.description !== this.state.description || nextState.modifier !== this.state.modifier ||
-      nextState.display !== this.state.display;
+      nextState.display !== this.state.display || nextState.onCooldown !== this.state.onCooldown;
   }
   componentDidUpdate() {
     if (this.state.description && this.state.modifier && this.state.display === 0) {

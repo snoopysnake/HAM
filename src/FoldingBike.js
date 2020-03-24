@@ -1,5 +1,5 @@
 import React from 'react';
-import './FoldingBike.css';
+// import './FoldingBike.css';
 
 export default class FoldingBike extends React.Component {
   constructor(props) {
@@ -15,11 +15,11 @@ export default class FoldingBike extends React.Component {
   }
   render() {
     return (
-      <div className="component-folding-bike">
+      <div className="component-folding-bike" style={{ width: '95%', height: '95%' }}>
         <div className="vehicle-mod" style={{ opacity: this.state.opacity, left:this.state.x, top:this.state.y }}>
           { this.state.mod }
         </div>
-          <svg width="95%" height="95%" viewBox="0 0 478 353" version="1.1" fillRule="evenodd" clipRule="evenodd" strokeLinecap="round" strokeMiterlimit="1.5">
+          <svg width="100%" height="100%" viewBox="0 0 478 353" version="1.1" fillRule="evenodd" clipRule="evenodd" strokeLinecap="round" strokeMiterlimit="1.5">
             { !this.props.riserHandlebars &&
               <g id="stock-handlebars">
                 <g transform="matrix(1,0,0,1,-62.5036,-2.61547)">

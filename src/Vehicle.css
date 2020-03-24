@@ -2,11 +2,12 @@
 	background-color: black;
 	width: 368px;
 	height: 368px;
-	position: relative;
+	position: absolute;
+	bottom: 0;
 }
 
 .vehicle-name {
-	position: absolute; 
+	position: absolute;
 	padding: 11px;
 	font-size: 1.45em;
 	color: white;
@@ -20,7 +21,6 @@
 	padding: 5px;
 	user-select: none;
 	animation: mod-pulse 3s infinite;
-	z-index: 998;
 }
 
 @keyframes mod-pulse {
