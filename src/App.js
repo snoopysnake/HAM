@@ -37,9 +37,10 @@ export default class App extends React.Component {
     super(props);
     this.currentTime = new Date();
     this.creditMultiplier = 100; // Multiplies by distance traveled in single tick to equal credit earned, default is 100
-    this.mphDecay = 1; // MPH lost per second (60 ticks), default is 1 (1 MPH lost/sec)
-    this.mphGain = 1; // MPH gained per click, default is 1
-    this.clickDelay = 100; // Determines how fast player must click to retain top speed, default is 100 (ms)
+    this.mphDecay = -1; // MPH lost per second (60 ticks), default is 1 (1 MPH lost/sec)
+    this.mphGain = 4; // MPH gained per click, default is 1
+    this.mphDifference = this.mphDecay;
+    this.mphDifferenceTimer = null;
     this.index = 0; // index of store catalog
     this.currentVehicle = {
       name: 'Folding Bike',
@@ -58,15 +59,13 @@ export default class App extends React.Component {
     };
     this.speedUp = this.speedUp.bind(this);
     this.purchaseItem = this.purchaseItem.bind(this);
-
+    // Move sprite on click
     app.loader.onComplete.add(() => {
       let ticker = PIXI.Ticker.shared;
       ticker.start();
-      const maxWidth = app.view.parentNode.clientWidth - pixiSprites.girl.width;
       ticker.add(time => {
-        let girlPosition = (this.state.speed - this.currentVehicle.minSpeed) / (this.currentVehicle.maxSpeed.total()
-          - this.currentVehicle.minSpeed) * maxWidth;
-        pixiSprites.girl.x = girlPosition < maxWidth ? girlPosition : maxWidth;
+        pixiSprites.girl.x = this.state.speed < this.currentVehicle.maxSpeed.total() ? (this.state.speed - this.currentVehicle.minSpeed) / (this.currentVehicle.maxSpeed.total()
+          - this.currentVehicle.minSpeed) * (app.view.parentNode.clientWidth - pixiSprites.girl.width) : app.view.parentNode.clientWidth - pixiSprites.girl.width;
       });  
     });    
   }
@@ -90,20 +89,16 @@ export default class App extends React.Component {
   }
   tick() {
     // Compare time to last time
-    var previousTime = this.currentTime;
+    let previousTime = this.currentTime;
     this.currentTime = new Date();
-    var elapsedSeconds = (this.currentTime - previousTime) / 1000;
+    let elapsedSeconds = (this.currentTime - previousTime) / 1000;
 
-    // Speed decay
+    // Speed gain or decay
     let newSpeed;
-    if (this.atMaxSpeed) {
-      if (this.state.speed > this.currentVehicle.maxSpeed.total()) {
-        // speed can be greater than max speed if a modifier is active
-        newSpeed = this.state.speed - (this.mphDecay * elapsedSeconds);
-      }
-      else newSpeed = this.currentVehicle.maxSpeed.total();
+    if (this.state.speed + (this.mphDifference * elapsedSeconds) > this.currentVehicle.maxSpeed.total()) {
+      newSpeed = this.currentVehicle.maxSpeed.total();
     }
-    else newSpeed = Math.max(this.currentVehicle.minSpeed, this.state.speed - (this.mphDecay * elapsedSeconds));
+    else newSpeed = Math.max(this.currentVehicle.minSpeed, this.state.speed + (this.mphDifference * elapsedSeconds));
 
     // Distance traveled
     let newDistance = this.state.distance + ((this.state.speed * milesToMph) * elapsedSeconds);
@@ -144,9 +139,9 @@ export default class App extends React.Component {
         let modName = item.name.replace(' ','');
         modName = modName.charAt(0).toLowerCase() + modName.slice(1);
         this.setState(state => ({
-          mods: {                   // object that we want to update
-            ...state.mods,    // keep all other key-value pairs
-            [modName]: item.SVG       // update the value of specific key
+          mods: {
+            ...state.mods,
+            [modName]: item.SVG
           }
         }));
       }
@@ -207,22 +202,12 @@ export default class App extends React.Component {
     );
   }
   speedUp() {
-    if (this.state.speed + this.mphGain >= this.currentVehicle.maxSpeed.total()) {
-      // Resets max speed timer
-      this.atMaxSpeed = true;
-      clearTimeout(this.topSpeedTimer);
-      this.topSpeedTimer = setTimeout(
-        () => this.atMaxSpeed = false,
-        this.clickDelay
-      );
-    }
-    if (this.state.speed <= this.currentVehicle.maxSpeed.total()) {
-      // speed can be greater than max speed if a modifier is active
-      this.setState({
-        // Add one mph per click
-        speed: Math.min(this.currentVehicle.maxSpeed.total(), this.state.speed + this.mphGain)
-      });
-    }
+    // speed can be greater than max speed if a modifier is active
+    this.mphDifference = this.mphGain;
+    clearTimeout(this.mphDifferenceTimer); // Reset timer for speed decay
+    this.mphDifferenceTimer = setTimeout(() => {
+      this.mphDifference = this.mphDecay;
+    }, 200);
   }
   render() {
     return (

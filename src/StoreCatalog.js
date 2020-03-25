@@ -46,11 +46,11 @@ export var storeCatalog = [
         modifier: '+10 max speed',
         modify(item) {
           console.log(`${item.modifier}...`);
-          this.currentVehicle.maxSpeed.b+=10;
+          item.timer = modifierTimer(item, this.currentVehicle, 'maxSpeed', 'b', 10);
         },
         remove(item) {
           console.log(`${item.name} effects have worn off...`);
-          this.currentVehicle.maxSpeed.b-=10;
+          item.timer = modifierTimer(item, this.currentVehicle, 'maxSpeed', 'b', -10);
         },
       },
     ],
@@ -96,3 +96,17 @@ export var storeCatalog = [
     upgrades: [],
   }
 ];
+
+function modifierTimer(item, vehicle, statOne, statTwo, statBuff) {
+  let i = 0;
+  return setInterval(
+    () => {
+      vehicle[statOne][statTwo]+=statBuff/30;
+      i++;
+      if (i === 30) {
+        clearInterval(item.timer);
+      }
+    },
+    500/60 // Adds stat in half second
+  );
+}
