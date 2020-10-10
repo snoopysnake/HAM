@@ -1,15 +1,15 @@
 import React from 'react';
 import * as PIXI from 'pixi.js'
-import Header from './Header';
-import ActiveBuffs from './ActiveBuffs';
-import Message from './Message';
-import Pixi from './Pixi';
-import ProgressBar from './ProgressBar';
-import Statistics from './Statistics';
-import Vehicle from './Vehicle';
-import FoldingBike from './FoldingBike';
-import Store from './Store';
-import Modifier from './Modifier';
+import Header from './header/Header';
+import ActiveBuffs from './active-buffs/ActiveBuffs';
+import Message from './message/Message';
+import Pixi from './pixi/Pixi';
+import ProgressBar from './progress-bar/ProgressBar';
+import Statistics from './statistics/Statistics';
+import Vehicle from './vehicle/Vehicle';
+import FoldingBike from './bikes/FoldingBike';
+import Store from './store/Store';
+import Modifier from './store/Modifier';
 import './App.css';
 
 let title = '【﻿ＨＡＭ】ＶａｐｏｒＤｒｉｖｅ​​';
@@ -19,7 +19,7 @@ const app = new PIXI.Application({
 });
 let pixiSprites = {}; 
 app.loader
-.add('girl', './assets/girl_side.png')
+.add('girl', './HAM/assets/girl_side.png') // '.assets/girl_side.png' for prod
 .load(onAssetsLoaded);
 
 function onAssetsLoaded(loader, res) {

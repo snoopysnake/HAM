@@ -1,8 +1,8 @@
 import React from 'react';
 import Modifier from './Modifier';
 import { bikeHelmet, } from './GearUpgrades';
-import { ReactComponent as LightweightPedals } from './svg/folding_bike_lightweight_pedals.svg';
-import { ReactComponent as RiserHandlebars } from './svg/folding_bike_riser_handlebars.svg';
+import { ReactComponent as LightweightPedals } from '../bikes/svg/folding_bike_lightweight_pedals.svg';
+import { ReactComponent as RiserHandlebars } from '../bikes/svg/folding_bike_riser_handlebars.svg';
 
 export var storeCatalog = [
   {
