@@ -41,6 +41,7 @@ export default class App extends React.Component {
     this.mphGain = 4; // MPH gained per click, default is 1
     this.mphDifference = this.mphDecay;
     this.mphDifferenceTimer = null;
+    this.topSpeed = 10; // Used to calculate padding in Pixi canvas
     this.index = 0; // index of store catalog
     this.currentVehicle = {
       name: 'Folding Bike',
@@ -68,7 +69,8 @@ export default class App extends React.Component {
         const padding = 200;
         pixiSprites.girl.x = Math.min(
           Math.max(
-          (this.state.speed - this.currentVehicle.minSpeed.total()) / (this.currentVehicle.maxSpeed.total() - this.currentVehicle.minSpeed.total()) * 
+          (this.state.speed - this.currentVehicle.minSpeed.total()) /
+          (this.topSpeed - this.currentVehicle.minSpeed.total()) * 
           (app.view.parentNode.clientWidth - pixiSprites.girl.width - 2*padding) + padding,
           padding), // prevents "stutter"
           app.view.parentNode.clientWidth - pixiSprites.girl.width - padding);
@@ -101,10 +103,18 @@ export default class App extends React.Component {
 
     // Speed gain or decay
     let newSpeed;
-    if (this.state.speed + (this.mphDifference * elapsedSeconds) > this.currentVehicle.maxSpeed.total()) {
-      newSpeed = this.currentVehicle.maxSpeed.total();
+    if (this.state.speed > this.currentVehicle.maxSpeed.total()) {
+      newSpeed = this.state.speed + (this.mphDecay * elapsedSeconds); // Speed decay when current speed greater than max speed (probably a better way to do this)
+    } else {
+      if (this.state.speed + (this.mphDifference * elapsedSeconds) > this.currentVehicle.maxSpeed.total()) {
+        newSpeed = this.currentVehicle.maxSpeed.total();
+      }
+      else newSpeed = Math.max(this.currentVehicle.minSpeed.total(), this.state.speed + (this.mphDifference * elapsedSeconds));
     }
-    else newSpeed = Math.max(this.currentVehicle.minSpeed.total(), this.state.speed + (this.mphDifference * elapsedSeconds));
+    
+    // Set top speed
+    if (newSpeed > this.topSpeed)
+      this.topSpeed = newSpeed;
 
     // Distance traveled
     let newDistance = this.state.distance + ((this.state.speed * milesToMph) * elapsedSeconds);
@@ -181,8 +191,23 @@ export default class App extends React.Component {
           }),
         });
         this.setState({mods: {}});
-        this.currentVehicle = item;
         this.index++;
+        // Incrementally add differences in min/max speed for smoother transition
+        let i = 0;
+        const minDiff = item.minSpeed.total() - this.currentVehicle.minSpeed.total();
+        const maxDiff = item.maxSpeed.total() - this.currentVehicle.maxSpeed.total();
+        const transitionTimer = setInterval(
+          () => {
+            this.currentVehicle.minSpeed.b+=minDiff/30;
+            this.currentVehicle.maxSpeed.b+=maxDiff/30;
+            i++;
+            if (i === 30) {
+              clearInterval(transitionTimer);
+              this.currentVehicle = item;
+            }
+          },
+          500/60
+        );
       }
     } else {
       this.setState({message: `Not enough credits for ${item.name}!`});

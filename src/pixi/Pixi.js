@@ -25,7 +25,7 @@ export default class Pixi extends React.Component {
     for(let prop in this.props.sprites) {
       const sprite = this.props.sprites[prop];
       sprite.scale = new PIXI.Point(parent.clientHeight/960, parent.clientHeight/960);
-      sprite.y = parent.clientHeight - sprite.height;
+      sprite.y = parent.clientHeight - sprite.height - 50;
     }
   }
   shouldComponentUpdate() {

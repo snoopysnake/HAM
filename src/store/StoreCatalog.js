@@ -57,7 +57,7 @@ export const storeCatalog = [
     nextVehicle: {
       name: 'Fixie',
       cost: 20,
-      minSpeed: 5,
+      minSpeed: new Modifier(5, 1, 1, 0),
       maxSpeed: new Modifier(15, 1, 1, 0),
       available: true,
       unique: true,
@@ -84,7 +84,7 @@ export const storeCatalog = [
     nextVehicle: {
       name: 'Road Bike',
       cost: 200,
-      minSpeed: 5,
+      minSpeed: new Modifier(5, 1, 1, 0),
       maxSpeed: new Modifier(25, 1, 1, 0),
       available: true,
       unique: true,
