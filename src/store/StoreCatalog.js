@@ -1,10 +1,10 @@
 import React from 'react';
-import Modifier from './Modifier';
+import Modifier, { modifierTimer, multipleModifierTimer } from './Modifier';
 import { bikeHelmet, } from './GearUpgrades';
 import { ReactComponent as LightweightPedals } from '../bikes/svg/folding_bike_lightweight_pedals.svg';
 import { ReactComponent as RiserHandlebars } from '../bikes/svg/folding_bike_riser_handlebars.svg';
 
-export var storeCatalog = [
+export const storeCatalog = [
   {
     vehicle: 'Folding Bike',
     upgrades:
@@ -16,9 +16,9 @@ export var storeCatalog = [
         description: 'Provides better grip and handling.',
         available: true,
         modifier: '+2 max speed',
-        modify() {
+        modify(item) {
           console.log('+1 max speed...');
-          this.currentVehicle.maxSpeed.b+=1;
+          item.timer = modifierTimer(item, this.currentVehicle, 'maxSpeed', 'b', 1);
         },
         isMod: true,
         SVG: <RiserHandlebars />
@@ -29,9 +29,9 @@ export var storeCatalog = [
         description: 'Flat pedals made with lighter material.',
         available: true,
         modifier: '+2 min speed',
-        modify() {
+        modify(item) {
           console.log('+1 max speed...');
-          this.currentVehicle.maxSpeed.b+=1;
+          item.timer = modifierTimer(item, this.currentVehicle, 'maxSpeed', 'b', 1);
         },
         isMod: true,
         SVG: <LightweightPedals />
@@ -96,17 +96,3 @@ export var storeCatalog = [
     upgrades: [],
   }
 ];
-
-function modifierTimer(item, vehicle, statOne, statTwo, statBuff) {
-  let i = 0;
-  return setInterval(
-    () => {
-      vehicle[statOne][statTwo]+=statBuff/30;
-      i++;
-      if (i === 30) {
-        clearInterval(item.timer);
-      }
-    },
-    500/60 // Adds stat in half second
-  );
-}

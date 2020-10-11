@@ -28,8 +28,8 @@ function onAssetsLoaded(loader, res) {
   app.stage.addChild(girl);
   pixiSprites.girl = girl;
   girl.scale = new PIXI.Point(parent.clientHeight/960, parent.clientHeight/960);
-  girl.x = 0;
-  girl.y = parent.clientHeight - girl.height;
+  girl.x = 200; // padding
+  girl.y = parent.clientHeight - girl.height - 50;
 }
 
 export default class App extends React.Component {
@@ -45,7 +45,7 @@ export default class App extends React.Component {
     this.currentVehicle = {
       name: 'Folding Bike',
       cost: 0,
-      minSpeed: 3,
+      minSpeed: new Modifier(3, 1, 1, 0),
       maxSpeed: new Modifier(10, 1, 1, 0),
       SVG: <FoldingBike />
     };
@@ -64,9 +64,15 @@ export default class App extends React.Component {
       let ticker = PIXI.Ticker.shared;
       ticker.start();
       ticker.add(time => {
-        pixiSprites.girl.x = this.state.speed < this.currentVehicle.maxSpeed.total() ? (this.state.speed - this.currentVehicle.minSpeed) / (this.currentVehicle.maxSpeed.total()
-          - this.currentVehicle.minSpeed) * (app.view.parentNode.clientWidth - pixiSprites.girl.width) : app.view.parentNode.clientWidth - pixiSprites.girl.width;
-      });  
+        // X Position of sprite based on speed
+        const padding = 200;
+        pixiSprites.girl.x = Math.min(
+          Math.max(
+          (this.state.speed - this.currentVehicle.minSpeed.total()) / (this.currentVehicle.maxSpeed.total() - this.currentVehicle.minSpeed.total()) * 
+          (app.view.parentNode.clientWidth - pixiSprites.girl.width - 2*padding) + padding,
+          padding), // prevents "stutter"
+          app.view.parentNode.clientWidth - pixiSprites.girl.width - padding);
+      });
     });    
   }
   componentDidMount() {
@@ -98,7 +104,7 @@ export default class App extends React.Component {
     if (this.state.speed + (this.mphDifference * elapsedSeconds) > this.currentVehicle.maxSpeed.total()) {
       newSpeed = this.currentVehicle.maxSpeed.total();
     }
-    else newSpeed = Math.max(this.currentVehicle.minSpeed, this.state.speed + (this.mphDifference * elapsedSeconds));
+    else newSpeed = Math.max(this.currentVehicle.minSpeed.total(), this.state.speed + (this.mphDifference * elapsedSeconds));
 
     // Distance traveled
     let newDistance = this.state.distance + ((this.state.speed * milesToMph) * elapsedSeconds);
